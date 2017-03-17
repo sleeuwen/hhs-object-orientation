@@ -40,51 +40,17 @@ public class PlayField extends JComponent {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                int xPos = player.xPos;
-                int yPos = player.yPos;
                 if (e.getKeyCode()==40){
-                    if (fields.get(xPos/75).get((yPos+75)/75) instanceof Tree || fields.get(xPos/75).get((yPos+75)/75) instanceof Wall) return;
-                    if (fields.get(xPos/75).get((yPos+75)/75) instanceof Lumberaxe){
-                        player.grabLumberaxe((Lumberaxe) fields.get(xPos/75).get((yPos+75)/75));
-                    }
-                    player.direction = Player.Side.down;
-                    player.move(0,75);
-                    fields.get(xPos/75).set(yPos/75,new Field(xPos/75,yPos/75));
-                    fields.get(player.xPos/75).set(player.yPos/75,player);
-                    PlayField.this.repaint();
+                    Walk(Player.Side.down,0,75);
                 }
                 if (e.getKeyCode()==37){
-                    if (fields.get((xPos-75)/75).get(yPos/75) instanceof Tree || fields.get((xPos-75)/75).get(yPos/75) instanceof Wall) return;
-                    if (fields.get((xPos-75)/75).get(yPos/75) instanceof Lumberaxe){
-                        player.grabLumberaxe((Lumberaxe) fields.get((xPos-75)/75).get(yPos/75));
-                    }
-                    player.move(-75,0);
-                    player.direction = Player.Side.left;
-                    fields.get(xPos/75).set(yPos/75,new Field(xPos/75,yPos/75));
-                    fields.get(player.xPos/75).set(player.yPos/75,player);
-                    PlayField.this.repaint();
+                    Walk(Player.Side.left,-75,0);
                 }
                 if (e.getKeyCode()==38){
-                    if (fields.get(xPos/75).get((yPos-75)/75) instanceof Tree || fields.get(xPos/75).get((yPos-75)/75) instanceof Wall) return;
-                    if (fields.get(xPos/75).get((yPos-75)/75) instanceof Lumberaxe){
-                        player.grabLumberaxe((Lumberaxe) fields.get(xPos/75).get((yPos-75)/75));
-                    }
-                    player.move(0,-75);
-                    player.direction = Player.Side.up;
-                    fields.get(xPos/75).set(yPos/75,new Field(xPos/75,yPos/75));
-                    fields.get(player.xPos/75).set(player.yPos/75,player);
-                    PlayField.this.repaint();
+                    Walk(Player.Side.up,0,-75);
                 }
                 if (e.getKeyCode()==39){
-                    if (fields.get((xPos+75)/75).get(yPos/75) instanceof Tree || fields.get((xPos+75)/75).get(yPos/75) instanceof Wall) return;
-                    if (fields.get((xPos+75)/75).get(yPos/75) instanceof Lumberaxe){
-                        player.grabLumberaxe((Lumberaxe) fields.get((xPos+75)/75).get(yPos/75));
-                    }
-                    player.move(75,0);
-                    player.direction = Player.Side.right;
-                    fields.get(xPos/75).set(yPos/75,new Field(xPos/75,yPos/75));
-                    fields.get(player.xPos/75).set(player.yPos/75,player);
-                    PlayField.this.repaint();
+                    Walk(Player.Side.right,75,0);
                 }
             }
 
@@ -95,6 +61,20 @@ public class PlayField extends JComponent {
         };
         setFocusable(true);
         addKeyListener(listener);
+    }
+
+    private void Walk(Player.Side direction,int dx,int dy){
+        player.direction = direction;
+        int xPos = player.xPos;
+        int yPos = player.yPos;
+        if (fields.get((xPos+dx)/75).get((yPos+dy)/75) instanceof Tree || fields.get((xPos+dx)/75).get((yPos+dy)/75) instanceof Wall){ PlayField.this.repaint(); return;}
+        if (fields.get((xPos+dx)/75).get((yPos+dy)/75) instanceof Lumberaxe){
+            player.grabLumberaxe((Lumberaxe) fields.get((xPos+dx)/75).get((yPos+dy)/75));
+        }
+        player.move(dx,dy);
+        fields.get(xPos/75).set(yPos/75,new Field((xPos)/75,(yPos)/75));
+        fields.get(player.xPos/75).set(player.yPos/75,player);
+        PlayField.this.repaint();
     }
 
     @Override
