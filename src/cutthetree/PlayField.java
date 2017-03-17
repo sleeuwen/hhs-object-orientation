@@ -1,7 +1,9 @@
 package cutthetree;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,11 +13,18 @@ public class PlayField extends JComponent {
     private int height, width;
     private Player player;
 
+    private Image image;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
     public PlayField(int height, int width){
         this.height = height;
         this.width = width;
+
+        try {
+            image = ImageIO.read(getClass().getResource("/img/backpack-icon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         fields = Level.generateLevel(Level.Type.tutorial,height,width);
         player = new Player(1,1);
         fields.get(1).set(1,player);
@@ -28,6 +37,11 @@ public class PlayField extends JComponent {
         for (ArrayList<Field> row : fields) {
             for (Field field : row) {
                 field.paint(g);
+                if(field.xPos/75==11&&field.yPos/75==0){
+                    g.drawImage(image,field.xPos,field.yPos,null);
+
+                }
+
             }
         }
     }
