@@ -13,6 +13,7 @@ public class PlayField extends JComponent {
     private int height, width;
     private Player player;
 
+    private Image imageAxe;
     private Image image;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
@@ -22,6 +23,7 @@ public class PlayField extends JComponent {
 
         try {
             image = ImageIO.read(getClass().getResource("/img/backpack-icon.png"));
+            imageAxe = ImageIO.read(getClass().getResource("/img/axes.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,6 +41,12 @@ public class PlayField extends JComponent {
                 field.paint(g);
                 if(field.xPos/75==11&&field.yPos/75==0){
                     g.drawImage(image,field.xPos,field.yPos,null);
+                    System.out.println(player.getAxe());
+                    if(player.getAxe()!=null){
+
+                        int idx = player.getAxe().getColor().ordinal();
+                        g.drawImage(imageAxe, field.xPos, field.yPos, field.xPos + 75, field.yPos + 75, idx * 75, 0, (idx + 1) * 75, 75, null);
+                    }
 
                 }
 
