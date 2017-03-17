@@ -10,13 +10,21 @@ public class Player extends Field {
     private static Image image;
 
     private Lumberaxe axe;
-    public enum Side{up,down,left,right}
+
+    public enum Side {
+        down,
+        up,
+        left,
+        right
+    }
+
     public Side direction = Side.down;
 
     public Player(int xPos, int yPos) {
         super(xPos,yPos);
-        if(image==null) loadImage();
+        if (image == null) loadImage();
     }
+
     private void loadImage() {
         try {
             image = ImageIO.read(getClass().getResource("/img/playerSprite.png"));
@@ -25,18 +33,21 @@ public class Player extends Field {
         }
     }
 
-
     public void move(int dx, int dy) {
         xPos += dx;
         yPos += dy;
     }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        g.drawImage(image, xPos, yPos, xPos + 75, yPos + 75, 150, 0,  225, 75, null);
-
-
+        int idx = direction.ordinal();
+        g.drawImage(image,
+                xPos, yPos, xPos + 75, yPos + 75,
+                150, idx * 75,  225, (idx + 1) * 75,
+                null
+        );
     }
     public void grabLumberaxe(Lumberaxe axe) {
         this.axe = axe;
