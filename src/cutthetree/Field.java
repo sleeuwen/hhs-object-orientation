@@ -3,7 +3,7 @@ package cutthetree;
 import java.awt.*;
 
 /**
- * Created by Koen van Zeijl on 17-3-2017.
+ * Created by The lion kings on 17-3-2017.
  */
 public class Field {
     protected int xPos,yPos;

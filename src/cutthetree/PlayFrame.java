@@ -3,7 +3,7 @@ package cutthetree;
 import javax.swing.*;
 
 /**
- * Created by Michael on 17-3-2017.
+ * Created by The lion kings on 17-3-2017.
  */
 public class PlayFrame extends JFrame {
 
