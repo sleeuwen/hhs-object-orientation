@@ -9,6 +9,6 @@ public class Field {
     protected int xPos,yPos;
     protected boolean isSolid = false;
 
-
-    public void paint(Graphics g){};
+    public void paint(Graphics g) {
+    }
 }

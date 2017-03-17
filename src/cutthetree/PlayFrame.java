@@ -13,7 +13,4 @@ public class PlayFrame extends JFrame {
     public PlayFrame(){
         setSize(FRAME_HEIGHT, FRAME_WIDTH);
     }
-
-
-
 }
