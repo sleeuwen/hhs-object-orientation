@@ -10,7 +10,8 @@ public class Player extends Field {
     private static Image image;
 
     private Lumberaxe axe;
-    public enum side{up,down,left,right}
+    public enum Side{up,down,left,right}
+    public Side direction = Side.down;
 
     public Player(int xPos, int yPos) {
         super(xPos,yPos);

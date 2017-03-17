@@ -47,6 +47,7 @@ public class PlayField extends JComponent {
                     if (fields.get(xPos/75).get((yPos+75)/75) instanceof Lumberaxe){
                         player.grabLumberaxe((Lumberaxe) fields.get(xPos/75).get((yPos+75)/75));
                     }
+                    player.direction = Player.Side.down;
                     player.move(0,75);
                     fields.get(xPos/75).set(yPos/75,new Field(xPos/75,yPos/75));
                     fields.get(player.xPos/75).set(player.yPos/75,player);
@@ -57,6 +58,7 @@ public class PlayField extends JComponent {
                     int yPos = player.yPos;
                     if (fields.get(xPos/75).get((yPos-75)/75) instanceof Tree || fields.get(xPos/75).get((yPos-75)/75) instanceof Wall) return;
                     player.move(0,-75);
+                    player.direction = Player.Side.up;
                     fields.get(xPos/75).set(yPos/75,new Field(xPos/75,yPos/75));
                     fields.get(player.xPos/75).set(player.yPos/75,player);
                     PlayField.this.repaint();
