@@ -8,7 +8,8 @@ import java.awt.*;
 public class Tree extends Field {
     private int color;
 
-    public Tree(int color){
+    public Tree(int x, int y,int color){
+        super(x,y);
 
     }
 

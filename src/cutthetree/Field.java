@@ -14,13 +14,13 @@ public class Field {
     protected Image grass;
     protected Image image;
 
-    public Field() {
-        this(0, 0);
-    }
+    //public Field() {
+    //    this(0, 0);
+    //}
 
     public Field(int x, int y) {
-        this.xPos = x;
-        this.yPos = y;
+        this.xPos = x * 90;
+        this.yPos = y * 90;
 
         try {
             grass = ImageIO.read(getClass().getResource("/img/grass.png"));

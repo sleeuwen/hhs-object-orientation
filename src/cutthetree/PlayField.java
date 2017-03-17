@@ -14,16 +14,7 @@ public class PlayField extends JComponent {
     public PlayField(int height, int width){
         this.height = height;
         this.width = width;
-
-        for (int i = 0; i < width; i++) {
-            ArrayList<Field> row = new ArrayList<>();
-            for (int j = 0; j < height; j++) {
-                row.add(new Field(i * 90, j * 90));
-            }
-            fields.add(row);
-        }
-
-        fields.get(0).set(7, new Lumberaxe(0, 7 * 90, 4));
+        fields = Level.generateLevel(Level.Type.tutorial,height,width);
     }
 
     @Override
