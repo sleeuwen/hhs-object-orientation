@@ -1,6 +1,8 @@
 package cutthetree;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by The lion kings on 17-3-2017.
@@ -10,10 +12,12 @@ public class Wall extends Field {
         super(x, y);
 
         isSolid = true;
+        try {
+            image = ImageIO.read(getClass().getResource("/img/solidTree.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-    }
+
 }

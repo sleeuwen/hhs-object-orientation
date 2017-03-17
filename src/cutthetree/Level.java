@@ -38,14 +38,14 @@ public class Level {
                 if (i == 0 || i==11) {
                     singleFields.add(new Wall(i,j));
                 }else if(i==1) {
-                    singleFields.add(j==9?new Lumberaxe(i,j,2):new Field(i,j));
+                    singleFields.add(j==9?new Lumberaxe(i,j,Color.Purple):new Field(i,j));
                 } else if (i==2){
                     singleFields.add(new Wall(i,1));
                     singleFields.add(new Field(i,2));
                     singleFields.add(new Field(i,3));
                     singleFields.add(new Wall(i,4));
                     singleFields.add(new Wall(i,5));
-                    singleFields.add(new Tree(i,6,2));
+                    singleFields.add(new Tree(i,6,Color.Purple));
                     singleFields.add(new Wall(i,7));
                     singleFields.add(new Wall(i,8));
                     singleFields.add(new Wall(i,9));
@@ -54,53 +54,55 @@ public class Level {
                     break;
                 }
                 else if (i==3){
-                    singleFields.add(j==2? new Field(i,j):new Tree(i,j,1));
+                    singleFields.add(j==2? new Field(i,j):new Tree(i,j,Color.Red));
                 } else if(i==4){
                     singleFields.add(new Field(i,1));
                     singleFields.add(new Field(i,2));
                     singleFields.add(new Field(i,3));
                     singleFields.add(new Field(i,4));
-                    singleFields.add(new Tree(i,5,1));
+                    singleFields.add(new Tree(i,5,Color.Red));
                     singleFields.add(new Field(i,6));
                     singleFields.add(new Wall(i,7));
-                    singleFields.add(new Tree(i,8,4));
-                    singleFields.add(new Tree(i,9,5));
-                    singleFields.add(new Tree(i,10,4));
+                    singleFields.add(new Tree(i,8,Color.Blue));
+                    singleFields.add(new Tree(i,9,Color.White));
+                    singleFields.add(new Tree(i,10,Color.Blue));
                     singleFields.add(new Wall(i, 11));
                     break;
                 } else if(i==5){
                     singleFields.add(new Field(i,1));
-                    singleFields.add(new Lumberaxe(i,2,1));
+                    singleFields.add(new Lumberaxe(i,2,Color.Red));
                     singleFields.add(new Field(i,3));
                     singleFields.add(new Field(i,4));
                     singleFields.add(new Wall(i,5));
                     singleFields.add(new Field(i,6));
                     singleFields.add(new Wall(i,7));
-                    singleFields.add(new Tree(i,8,5));
+                    singleFields.add(new Tree(i,8,Color.White));
                     singleFields.add(new Field(i,9));
                     singleFields.add(new Field(i,10));
                     singleFields.add(new Wall(i, 11));
+                    break;
                 } else if(i==6){
                     singleFields.add(new Field(i,1));
-                    singleFields.add(new Lumberaxe(i,2,3));
+                    singleFields.add(new Lumberaxe(i,2,Color.Yellow));
                     singleFields.add(new Field(i,3));
                     singleFields.add(new Field(i,4));
                     singleFields.add(new Wall(i,5));
                     singleFields.add(new Field(i,6));
-                    singleFields.add(new Tree(i,7,3));
-                    singleFields.add(new Tree(i,8,1));
+                    singleFields.add(new Tree(i,7,Color.Yellow));
+                    singleFields.add(new Tree(i,8,Color.Red));
                     singleFields.add(new Field(i,9));
                     singleFields.add(new Field(i,10));
                     singleFields.add(new Wall(i, 11));
+                    break;
                 } else if(i==7){
                     singleFields.add((j==5||j==6||j==7)? new Wall(i,j):new Field(i,j));
                 } else if(i==8){
-                    singleFields.add(new Tree(i,1,5));
-                    singleFields.add(new Tree(i,2,5));
-                    singleFields.add(new Tree(i,3,3));
-                    singleFields.add(new Tree(i,4,4));
-                    singleFields.add(new Tree(i,5,5));
-                    singleFields.add(new Tree(i,6,1));
+                    singleFields.add(new Tree(i,1,Color.White));
+                    singleFields.add(new Tree(i,2,Color.White));
+                    singleFields.add(new Tree(i,3,Color.Yellow));
+                    singleFields.add(new Tree(i,4,Color.Blue));
+                    singleFields.add(new Tree(i,5,Color.White));
+                    singleFields.add(new Tree(i,6,Color.Red));
                     singleFields.add(new Wall(i,7));
                     singleFields.add(new Field(i,8));
                     singleFields.add(new Wall(i,9));
@@ -108,12 +110,12 @@ public class Level {
                     singleFields.add(new Wall(i, 11));
                     break;
                 } else if(i==9){
-                    singleFields.add(new Tree(i,1,5));
-                    singleFields.add(new Tree(i,2,4));
-                    singleFields.add(new Tree(i,3,3));
-                    singleFields.add(new Tree(i,4,4));
-                    singleFields.add(new Tree(i,5,5));
-                    singleFields.add(new Tree(i,6,3));
+                    singleFields.add(new Tree(i,1,Color.White));
+                    singleFields.add(new Tree(i,2,Color.Blue));
+                    singleFields.add(new Tree(i,3,Color.Yellow));
+                    singleFields.add(new Tree(i,4,Color.Blue));
+                    singleFields.add(new Tree(i,5,Color.White));
+                    singleFields.add(new Tree(i,6,Color.Yellow));
                     singleFields.add(new Field(i,7));
                     singleFields.add(new Field(i,8));
                     singleFields.add(new Field(i,9));
@@ -121,11 +123,11 @@ public class Level {
                     singleFields.add(new Wall(i, 11));
                     break;
                 } else if (i==10){
-                    singleFields.add(new Tree(i,1,4));
-                    singleFields.add(new Tree(i,2,5));
-                    singleFields.add(new Lumberaxe(i,3,1));
-                    singleFields.add(new Tree(i,4,6));
-                    singleFields.add(new Tree(i,5,6));
+                    singleFields.add(new Tree(i,1,Color.Blue));
+                    singleFields.add(new Tree(i,2,Color.White));
+                    singleFields.add(new Lumberaxe(i,3,Color.Red));
+                    singleFields.add(new Tree(i,4,Color.Black));
+                    singleFields.add(new Tree(i,5,Color.Black));
                     singleFields.add(new Field(i,6));
                     singleFields.add(new Field(i,7));
                     singleFields.add(new Field(i,8));
