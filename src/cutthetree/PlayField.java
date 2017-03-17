@@ -9,12 +9,16 @@ import java.util.ArrayList;
  */
 public class PlayField extends JComponent {
     private int height, width;
+    private Player player;
+
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
     public PlayField(int height, int width){
         this.height = height;
         this.width = width;
         fields = Level.generateLevel(Level.Type.tutorial,height,width);
+        player = new Player(1,1);
+        fields.get(1).set(1,player);
     }
 
     @Override
