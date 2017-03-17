@@ -32,7 +32,7 @@ public class Level {
             ArrayList<Field> singleFields = new ArrayList<>();
             for (int j = 0; j<12;j++){
                 if (j == 0 || j == 11) {
-                    singleFields.add(new Wall(i, 0));
+                    singleFields.add(j==0?new Wall(i, 0):new Wall(i,11));
                     continue;
                 }
                 if (i == 0 || i==11) {
