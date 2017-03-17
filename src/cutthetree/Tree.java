@@ -32,7 +32,7 @@ public class Tree extends Field {
         super.paint(g);
 
         int idx = color.ordinal();
-        g.drawImage(image, xPos, yPos, xPos + 90, yPos + 90, idx * 90, 0, (idx + 1) * 90, 90, null);
+        g.drawImage(image, xPos, yPos, xPos + 75, yPos + 75, idx * 75, 0, (idx + 1) * 75, 75, null);
 
 
     }

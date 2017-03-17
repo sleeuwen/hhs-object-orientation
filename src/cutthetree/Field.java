@@ -19,8 +19,8 @@ public class Field {
     //}
 
     public Field(int x, int y) {
-        this.xPos = x * 90;
-        this.yPos = y * 90;
+        this.xPos = x * 75;
+        this.yPos = y * 75;
 
         if (grass == null) loadImage();
     }
