@@ -9,7 +9,7 @@ public class Wall extends Field{
     protected boolean isSolid = true;
 
     @Override
-    public void Paint(Graphics g) {
-        super.Paint(g);
+    public void paint(Graphics g) {
+        super.paint(g);
     }
 }

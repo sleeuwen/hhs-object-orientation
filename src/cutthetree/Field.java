@@ -10,5 +10,5 @@ public class Field {
     protected boolean isSolid = false;
 
 
-    public void Paint(Graphics g){};
+    public void paint(Graphics g){};
 }
