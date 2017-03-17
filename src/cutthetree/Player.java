@@ -15,8 +15,6 @@ public class Player extends Field {
     public Player(int xPos, int yPos) {
         super(xPos,yPos);
         if(image==null) loadImage();
-
-        axe = new Lumberaxe(0,0,Color.Red);
     }
     private void loadImage() {
         try {
