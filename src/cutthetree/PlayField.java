@@ -19,6 +19,8 @@ public class PlayField extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         for (ArrayList<Field> row : fields) {
             for (Field field : row) {
                 field.paint(g);

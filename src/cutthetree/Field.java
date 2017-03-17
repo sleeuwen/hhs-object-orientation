@@ -11,7 +11,7 @@ public class Field {
     protected int xPos, yPos;
     protected boolean isSolid = false;
 
-    protected Image grass;
+    protected static Image grass;
     protected Image image;
 
     //public Field() {
@@ -22,6 +22,10 @@ public class Field {
         this.xPos = x * 90;
         this.yPos = y * 90;
 
+        if (grass == null) loadImage();
+    }
+
+    private void loadImage() {
         try {
             grass = ImageIO.read(getClass().getResource("/img/grass.png"));
         } catch (IOException e) {
