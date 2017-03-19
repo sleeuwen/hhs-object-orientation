@@ -6,7 +6,7 @@ import java.awt.geom.RoundRectangle2D;
 
 public class SpeechBalloon extends Field {
     private static final int PADDING = 5 * 2;
-    private static Font FONT;
+    private static Font font;
 
     private String message;
 
@@ -14,13 +14,12 @@ public class SpeechBalloon extends Field {
         super(x, y);
 
         this.message = message.trim();
-
-        if (FONT == null) loadFont();
+        if (font == null) loadFont();
     }
 
     private void loadFont() {
         try {
-            FONT = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/img/pokemon.ttf")).deriveFont(12f);
+            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(12f);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,7 +30,7 @@ public class SpeechBalloon extends Field {
         if (message.length() == 0) return;
 
         String[] lines = message.split("\n");
-        g.setFont(FONT);
+        g.setFont(font);
 
         int height = g.getFontMetrics().getHeight() + 5;
         int width = 0;
