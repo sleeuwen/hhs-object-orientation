@@ -8,14 +8,10 @@ public class Lumberaxe extends Field {
     private static Image image;
     private Color color;
 
-    //public Lumberaxe(int code) {
-    //    this.code = code;
-    //}
-
     public Lumberaxe(int x, int y, Color color) {
         super(x, y);
-        this.color = color;
 
+        this.color = color;
         if (image == null) loadImage();
     }
 
@@ -31,10 +27,16 @@ public class Lumberaxe extends Field {
     public void paint(Graphics g) {
         super.paint(g);
 
-        int idx = color.ordinal();
-        g.drawImage(image, xPos, yPos, xPos + 75, yPos + 75, idx * 75, 0, (idx + 1) * 75, 75, null);
+        int x = xPos * SIZE;
+        int y = yPos * SIZE;
+        int offset = color.ordinal() * SIZE;
 
-
+        g.drawImage(
+                image, // Source image
+                x, y, x + SIZE, y + SIZE, // Destination position
+                offset, 0, offset + SIZE, SIZE, // Source position
+                null
+        );
     }
 
     public Color getColor() {

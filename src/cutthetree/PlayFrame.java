@@ -9,10 +9,10 @@ public class PlayFrame extends JFrame {
     private final static int FRAME_HEIGHT = 929;
     private final static int FRAME_WIDTH = 900;
 
-    public PlayFrame(){
+    public PlayFrame() {
         getContentPane().setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-        add(new PlayField(10, 10));
+        add(new PlayField(12, 12));
     }
 }

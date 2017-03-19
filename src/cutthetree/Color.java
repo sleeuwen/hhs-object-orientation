@@ -1,14 +1,13 @@
 package cutthetree;
 
 /**
- * Created by Michael on 17-3-2017.
+ * Created by The lion kings on 17-3-2017.
  */
 public enum Color {
-
-    Red,
-    Purple,
-    Yellow,
-    Blue,
-    White,
-    Black
+    RED,
+    PURPLE,
+    YELLOW,
+    BLUE,
+    WHITE,
+    BLACK,
 }

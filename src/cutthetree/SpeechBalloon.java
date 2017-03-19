@@ -27,11 +27,12 @@ public class SpeechBalloon extends Field {
 
     @Override
     public void paint(Graphics g) {
-        if (message.length() == 0) return;
+        if (message.isEmpty()) return;
 
         String[] lines = message.split("\n");
         g.setFont(font);
 
+        // Measure text width/height
         int height = g.getFontMetrics().getHeight() + 5;
         int width = 0;
         for (String line : lines) {
@@ -39,9 +40,14 @@ public class SpeechBalloon extends Field {
         }
         width += PADDING * 2;
 
+        // Get absolute x/y positions, 1/4th closer to the center
+        int x = xPos * SIZE + (SIZE / 4);
+        int y = yPos * SIZE + (SIZE / 4);
+
+        // Draw balloon
         RoundRectangle2D rectangle = new RoundRectangle2D.Float(
-                xPos - width / 2 - 5,
-                yPos - 10 - PADDING - (height * lines.length),
+                x - width / 2 - 5,
+                y - 10 - PADDING - (height * lines.length),
                 width + PADDING,
                 height * lines.length + PADDING,
                 10,
@@ -52,15 +58,18 @@ public class SpeechBalloon extends Field {
         ((Graphics2D) g).fill(rectangle);
 
         g.fillPolygon(new Polygon(
-                new int[]{xPos, xPos, xPos - 10, xPos},
-                new int[]{yPos, yPos - 10, yPos - 10, yPos},
+                new int[]{x, x, x - 10, x},
+                new int[]{y, y - 10, y - 10, y},
                 4
         ));
 
         // Draw message
+        x = x - (width / 2) + PADDING;
+        y = y - 12 - (PADDING / 2) - (height * (lines.length - 1));
+
         g.setColor(Color.BLACK);
         for (int i = 0; i < lines.length; i++) {
-            g.drawString(lines[i], xPos - (width / 2) + PADDING, yPos - 12 - (PADDING / 2) - (height * i));
+            g.drawString(lines[i], x, y + (height * i));
         }
     }
 }

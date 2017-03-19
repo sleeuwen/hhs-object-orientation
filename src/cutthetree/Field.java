@@ -8,19 +8,16 @@ import java.io.IOException;
  * Created by The lion kings on 17-3-2017.
  */
 public class Field {
+    public static final int SIZE = 75;
+
+    protected static Image grass;
+
     protected int xPos, yPos;
     protected boolean isSolid = false;
 
-    protected static Image grass;
-    protected Image image;
-
-    //public Field() {
-    //    this(0, 0);
-    //}
-
     public Field(int x, int y) {
-        this.xPos = x * 75;
-        this.yPos = y * 75;
+        xPos = x;
+        yPos = y;
 
         if (grass == null) loadImage();
     }
@@ -34,11 +31,7 @@ public class Field {
     }
 
     public void paint(Graphics g) {
-        g.drawImage(grass, xPos, yPos, null);
-
-        if (image != null) {
-            g.drawImage(image, xPos, yPos, null);
-        }
+        g.drawImage(grass, xPos * SIZE, yPos * SIZE, null);
     }
 
     public boolean isSolid() {

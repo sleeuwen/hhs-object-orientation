@@ -5,23 +5,15 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Player extends Field {
-    //private int xPos;
-    //private int yPos;
     private static Image image;
 
     private Lumberaxe axe;
 
-    public enum Side {
-        down,
-        up,
-        left,
-        right
-    }
-
-    public Side direction = Side.down;
+    private Direction direction = Direction.DOWN;
 
     public Player(int xPos, int yPos) {
-        super(xPos,yPos);
+        super(xPos, yPos);
+
         if (image == null) loadImage();
     }
 
@@ -38,17 +30,26 @@ public class Player extends Field {
         yPos += dy;
     }
 
+    public void changeDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        int idx = direction.ordinal();
-        g.drawImage(image,
-                xPos, yPos, xPos + 75, yPos + 75,
-                150, idx * 75,  225, (idx + 1) * 75,
+        int x = xPos * SIZE;
+        int y = yPos * SIZE;
+        int offset = direction.ordinal() * SIZE;
+
+        g.drawImage(
+                image, // Source image,
+                x, y, x + SIZE, y + SIZE, // Destination position
+                150, offset, 225, offset + SIZE, // Source position
                 null
         );
     }
+
     public void grabLumberaxe(Lumberaxe axe) {
         this.axe = axe;
     }
