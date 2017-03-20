@@ -1,12 +1,21 @@
 package cutthetree;
 
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by The lion kings on 20-3-2017.
@@ -17,6 +26,7 @@ public class Game extends JComponent {
     private Font font;
     private PlayField playField;
     private int selected = 0;
+    private Clip clip;
 
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
@@ -36,6 +46,7 @@ public class Game extends JComponent {
                         if (selected == 0) {
                             playField = new PlayField(12, 12);
                             playScreen = false;
+                            clip.stop();
                         }
                         break;
                     case KeyEvent.VK_UP:
@@ -52,12 +63,26 @@ public class Game extends JComponent {
 
         loadFont();
         loadImage();
+        loadSound();
     }
 
     private void loadFont() {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private void loadSound(){
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(getClass().getResource("/sound/opening.wav").getFile())));
+            clip.start();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

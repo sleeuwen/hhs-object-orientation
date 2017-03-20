@@ -1,10 +1,13 @@
 package cutthetree;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -103,8 +106,19 @@ public class PlayField extends JComponent {
         Tree tree = (Tree)fields.get(x + dx).get(y + dy);
         if(tree.cut(player.getAxe())){
             fields.get(x + dx).set(y +dy, new Field(x+dx, y+dy));
+            loadSound("chopping.wav");
         }else {
             player.say("I need a " + tree.getColor() + " axe to cut this tree");
+        }
+    }
+    private void loadSound(String filename){
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(getClass().getResource("/sound/" + filename).getFile())));
+            clip.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -120,6 +134,7 @@ public class PlayField extends JComponent {
 
         if (fields.get(x + dx).get(y + dy) instanceof Lumberaxe) {
             player.grabLumberaxe((Lumberaxe) fields.get(x + dx).get(y + dy));
+            loadSound("grab.wav");
         }
 
         player.move(dx, dy);
