@@ -3,8 +3,8 @@ package cutthetree;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,8 +17,6 @@ public class PlayField extends JComponent {
 
     private boolean pause = false;
 
-
-
     private int height, width;
     private Player player;
 
@@ -28,19 +26,13 @@ public class PlayField extends JComponent {
         this.height = height;
         this.width = width;
 
-
-
         fields = Level.generateLevel(LevelType.TUTORIAL, height, width);
 
         player = new Player(1, 1);
         fields.get(1).set(1, player);
 
         setFocusable(true);
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
+        addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 player.say("");
@@ -62,17 +54,13 @@ public class PlayField extends JComponent {
                         break;
                     case KeyEvent.VK_ESCAPE:
                         pause = !pause;
-                        if(pause){
+                        if (pause) {
                             //// TODO: 20-3-2017 playscreen
                         }
                         break;
                 }
 
                 repaint();
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
             }
         });
 

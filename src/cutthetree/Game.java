@@ -2,12 +2,11 @@ package cutthetree;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.Color;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 /**
  * Created by The lion kings on 20-3-2017.
@@ -18,53 +17,39 @@ public class Game extends JComponent {
     private Font font;
     private PlayField playField;
     private int selected = 0;
-    private String[] choices = new String[]{
-            "Start","Difficulty","Exit"
-    };
 
+    private String[] choices = new String[]{
+            "Start", "Difficulty", "Exit"
+    };
 
     public Game() {
         setFocusable(true);
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
+        addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    if(selected == 0){
-                        playField = new PlayField(12,12);
-                        playScreen = false;
-                        playField.grabFocus();
-                        repaint();
-                    }
+                if (!playScreen) {
+                    playField.dispatchEvent(e);
+                    return;
                 }
 
-
-                if(e.getKeyCode() == KeyEvent.VK_UP){
-                    if(selected>0){
-                        selected--;
-                        repaint();
-                    }
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        if (selected == 0) {
+                            playField = new PlayField(12, 12);
+                            playScreen = false;
+                        }
+                        break;
+                    case KeyEvent.VK_UP:
+                        if (selected > 0) selected--;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        if (selected < choices.length - 1) selected++;
+                        break;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    if(selected<choices.length-1){
-                        selected++;
-                        repaint();
-                    }
 
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
+                repaint();
             }
         });
-
-
 
         loadFont();
         loadImage();
@@ -77,6 +62,7 @@ public class Game extends JComponent {
             e.printStackTrace();
         }
     }
+
     private void loadImage() {
         try {
             image = ImageIO.read(getClass().getResource("/img/menuBackground.png"));
@@ -87,24 +73,25 @@ public class Game extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-
         if (playScreen) {
-
             g.setColor(Color.BLACK);
             g.setFont(font);
-            g.drawImage(image,0,0,null);
-            g.setColor(Color.lightGray);
-            g.fillRect(225,232,450,464);
-            g.setColor(Color.WHITE);
+            g.drawImage(image, 0, 0, null);
 
-            drawCentered(g,"CutThaTree",150);
-            for(int i = 0; i < choices.length; i++){
-                if(i==selected){
+            g.setColor(Color.lightGray);
+            g.fillRect(225, 232, 450, 464);
+
+            g.setColor(Color.WHITE);
+            drawCentered(g, "CutThaTree", 150);
+
+            for (int i = 0; i < choices.length; i++) {
+                if (i == selected) {
                     g.setColor(Color.RED);
-                }else{
+                } else {
                     g.setColor(Color.WHITE);
                 }
-                drawCentered(g,choices[i],420+(i*32));
+
+                drawCentered(g, choices[i], 420 + (i * 32));
             }
 
         } else {
@@ -115,6 +102,6 @@ public class Game extends JComponent {
 
     private void drawCentered(Graphics g, String str, int y) {
         int width = g.getFontMetrics().stringWidth(str);
-        g.drawString(str,getWidth()/2-width/2,y);
+        g.drawString(str, getWidth() / 2 - width / 2, y);
     }
 }
