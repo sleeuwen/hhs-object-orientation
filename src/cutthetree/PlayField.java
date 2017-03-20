@@ -20,16 +20,15 @@ public class PlayField extends JComponent {
     private static Image image;
     private static Image imageMenu;
 
-    private boolean pause = false;
     private boolean finished = false;
 
     private int height, width;
     private Player player;
 
     private int selected = 0;
+    private Font font;
 
-    private String[] choices = new String[]{
-            "Continue", "Restart", "Exit"};
+
 
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
@@ -47,26 +46,8 @@ public class PlayField extends JComponent {
             @Override
             public void keyPressed(KeyEvent e) {
                 player.say("");
-                if(pause) {
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_UP:
-                            if(selected>0){
-                                selected--;}
-                            break;
-                        case KeyEvent.VK_DOWN:
-                            if(selected<choices.length-1);
-                            selected++;
-                            break;
-                        case KeyEvent.VK_ENTER:
 
-                            break;
-                        case KeyEvent.VK_ESCAPE:
-                            pause = false;
-                            break;
-
-                    }
-                }
-                else if (!finished &&!pause) {
+                if (!finished) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_UP:
                             walk(Direction.UP, 0, -1);
@@ -83,13 +64,7 @@ public class PlayField extends JComponent {
                         case KeyEvent.VK_SPACE:
                             checkTree();
                             break;
-                        case KeyEvent.VK_ESCAPE:
-                            pause = true;
-                            if (pause) {
-                                //// TODO: 20-3-2017 playscreen
 
-                            }
-                            break;
                     }
                 }
 
@@ -98,6 +73,7 @@ public class PlayField extends JComponent {
         });
 
         if (image == null || imageAxe == null) loadImage();
+        loadFont();
     }
 
     private void checkTree() {
@@ -117,17 +93,12 @@ public class PlayField extends JComponent {
         }
     }
 
-    private void Restart(){
-        pause = false;
-        finished = false;
-        new PlayField(12,12);
-    }
 
     private void loadImage() {
         try {
             image = ImageIO.read(getClass().getResource("/img/backpack-icon.png"));
             imageAxe = ImageIO.read(getClass().getResource("/img/axes.png"));
-            imageMenu = ImageIO.read(getClass().getResource("/img/pauseScreen.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -194,25 +165,16 @@ public class PlayField extends JComponent {
             }
         }
 
-        if(pause){
-            g.drawImage(imageMenu,0,0,null);
-            for (int i = 0; i < choices.length; i++) {
-                if (i == selected) {
-                    g.setColor(java.awt.Color.RED);
-                } else {
-                    g.setColor(Color.WHITE);
-                }
 
-                drawCentered(g, choices[i], 420 + (i * 32));
-            }
-        }else{
+
         paintBackpack(g);
         if(!finished) player.paint(g);
-        }
+
     }
     private void drawCentered(Graphics g, String str, int y) {
         int width = g.getFontMetrics().stringWidth(str);
-        g.drawString(str, getWidth() / 2 - width / 2, y);
+        g.drawString(str, PlayFrame.FRAME_WIDTH / 2 - width / 2, y);
+
     }
 
     private void paintBackpack(Graphics g) {
@@ -230,6 +192,13 @@ public class PlayField extends JComponent {
                     offset, 0, offset + Field.SIZE, Field.SIZE, // Source position
                     null
             );
+        }
+    }
+    private void loadFont() {
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -11,7 +11,7 @@ public class Main {
         JFrame window = new PlayFrame();
 
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setTitle("CutThaTree");
+        window.setTitle("Cut The Tree");
         window.setResizable(false);
         window.setVisible(true);
     }

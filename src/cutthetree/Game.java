@@ -25,17 +25,23 @@ public class Game extends JComponent {
     private Image image;
     private Font font;
     private PlayField playField;
+
+    private boolean pause = false;
+
     private int selected = 0;
     private boolean selectLevel;
     private int difficulty = 0;
     private Clip clip;
     private Image imageF;
     private Image imageT;
+    private Image imageMenu;
 
 
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
     };
+    private String[] choicesMenu = new String[]{
+            "Continue", "Restart", "Exit"};
 
     private String[] levels = new String[]{
             "Tutorial", "Easy", "Medium", "Hard", "Back"
@@ -47,7 +53,45 @@ public class Game extends JComponent {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (!playScreen) {
+
+                    if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                        pause = true;
+                        repaint();
+                        return;
+                    }
+                    if(pause) {
+                        switch (e.getKeyCode()) {
+                            case KeyEvent.VK_UP:
+                                if(selected>0){
+                                    selected--;}
+                                break;
+                            case KeyEvent.VK_DOWN:
+                                if(selected<choices.length-1);
+                                selected++;
+                                break;
+                            case KeyEvent.VK_ENTER:
+                                if(selected == 1){
+                                   playField = new PlayField(12,12);
+
+                                }
+                                if(selected == 2) {
+                                    playScreen = true;
+                                }
+                                selected = 0;
+                                pause = false;
+                                break;
+                            case KeyEvent.VK_ESCAPE:
+                                pause = false;
+                                break;
+
+                        }
+                        repaint();
+                        return;
+                    }
+
                     playField.dispatchEvent(e);
+                    repaint();
+                    return;
                 }
 
                 switch (e.getKeyCode()) {
@@ -123,6 +167,7 @@ public class Game extends JComponent {
             image = ImageIO.read(getClass().getResource("/img/menuBackground.png"));
             imageF = ImageIO.read(getClass().getResource("/img/menuField.png"));
             imageT = ImageIO.read(getClass().getResource("/img/menuTitle.png"));
+            imageMenu = ImageIO.read(getClass().getResource("/img/pauseScreen.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,12 +180,12 @@ public class Game extends JComponent {
             g.setFont(font);
             g.drawImage(image, 0, 0, null);
 
-            g.drawImage(imageF,225,232,450,464,null);
+            g.drawImage(imageF, 225, 232, 450, 464, null);
 //            g.setColor(Color.lightGray);
 //            g.fillRect(225, 232, 450, 464);
 
             g.setColor(Color.WHITE);
-            g.drawImage(imageT,getWidth()/2-200,120,null);
+            g.drawImage(imageT, getWidth() / 2 - 200, 120, null);
 
 
             String[] choices = selectLevel ? levels : this.choices;
@@ -155,6 +200,22 @@ public class Game extends JComponent {
             }
         } else {
             playField.paintComponent(g);
+
+
+            if (pause) {
+                g.drawImage(imageMenu, 0, 0, null);
+                g.setFont(font);
+
+                for (int i = 0; i < choicesMenu.length; i++) {
+                    if (i == selected) {
+                        g.setColor(java.awt.Color.RED);
+                    } else {
+                        g.setColor(Color.WHITE);
+                    }
+
+                    drawCentered(g, choicesMenu[i], 420 + (i * 32));
+                }
+            }
         }
     }
 
