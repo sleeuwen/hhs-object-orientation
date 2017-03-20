@@ -10,8 +10,7 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,11 +30,16 @@ public class Game extends JComponent {
     private int selected = 0;
     private boolean selectLevel;
     private int difficulty = 0;
-    private Clip clip;
+    private static Clip clip;
     private Image imageF;
     private Image imageT;
     private Image imageMenu;
+    private Image imageSound;
+    private Image imageNoSound;
+    private Image imageFx;
+    private Image imageNoFx;
 
+    private boolean sound = true,fx = true;
 
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
@@ -131,10 +135,28 @@ public class Game extends JComponent {
                 repaint();
             }
         });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int x = e.getX();
+                int y = e.getY();
 
+                if (x>240&&x<280&&y>640&&y<680){
+                    sound = !sound;
+                    if (sound){
+                        clip.start();
+                    }else{
+                        clip.stop();
+                    }
+                }
+                if (x>285&&x<325&&y>640&&y<680) fx = !fx;
+                repaint();
+            }
+        });
         loadFont();
         loadImage();
-        loadSound();
+        Game.loadSound("opening.wav");
     }
 
     private void loadFont() {
@@ -147,10 +169,10 @@ public class Game extends JComponent {
 
 
 
-    private void loadSound(){
+    public static void loadSound(String filename){
         try {
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(getClass().getResource("/sound/opening.wav").getFile())));
+            clip.open(AudioSystem.getAudioInputStream(new File(Game.class.getResource("/sound/" + filename).getFile())));
             clip.start();
         }
         catch (Exception e) {
@@ -164,6 +186,11 @@ public class Game extends JComponent {
             imageF = ImageIO.read(getClass().getResource("/img/menuField.png"));
             imageT = ImageIO.read(getClass().getResource("/img/menuTitle.png"));
             imageMenu = ImageIO.read(getClass().getResource("/img/pauseScreen.png"));
+            imageSound = ImageIO.read(getClass().getResource("/img/sound.png"));
+            imageNoSound = ImageIO.read(getClass().getResource("/img/noSound.png"));
+            imageFx = ImageIO.read(getClass().getResource("/img/fx.png"));
+            imageNoFx = ImageIO.read(getClass().getResource("/img/noFx.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -177,6 +204,12 @@ public class Game extends JComponent {
             g.drawImage(image, 0, 0, null);
 
             g.drawImage(imageF, 225, 232, 450, 464, null);
+
+
+            g.drawImage(sound?imageSound:imageNoSound,240,640,null);
+            g.drawImage(fx?imageFx:imageNoFx,285,640,null);
+            //g.drawImage(imageSound,240,640,null);
+            //g.drawImage(imageFx, 285,640,null);
 //            g.setColor(Color.lightGray);
 //            g.fillRect(225, 232, 450, 464);
 
@@ -219,4 +252,6 @@ public class Game extends JComponent {
         int width = g.getFontMetrics().stringWidth(str);
         g.drawString(str, getWidth() / 2 - width / 2, y);
     }
+
+
 }

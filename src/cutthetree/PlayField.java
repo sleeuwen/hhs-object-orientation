@@ -114,19 +114,9 @@ public class PlayField extends JComponent {
         Tree tree = (Tree)fields.get(x + dx).get(y + dy);
         if(tree.cut(player.getAxe())){
             fields.get(x + dx).set(y +dy, new Field(x+dx, y+dy));
-            loadSound("chopping.wav");
+            Game.loadSound("chopping.wav");
         }else {
             player.say("I need a " + tree.getColor() + " axe to cut this tree");
-        }
-    }
-    private void loadSound(String filename){
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(getClass().getResource("/sound/" + filename).getFile())));
-            clip.start();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -142,10 +132,10 @@ public class PlayField extends JComponent {
 
         if (fields.get(x + dx).get(y + dy) instanceof Lumberaxe) {
             player.grabLumberaxe((Lumberaxe) fields.get(x + dx).get(y + dy));
-            loadSound("grab.wav");
+            Game.loadSound("grab.wav");
         }
         if (fields.get(x + dx).get(y + dy) instanceof Finish) {
-            loadSound("winning.wav");
+            Game.loadSound("winning.wav");
             finished = true;
             fields.get(x).set(y, new Field(x, y));
             return;
