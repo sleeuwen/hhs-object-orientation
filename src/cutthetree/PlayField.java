@@ -17,6 +17,8 @@ public class PlayField extends JComponent {
 
     private boolean pause = false;
 
+
+
     private int height, width;
     private Player player;
 
@@ -26,7 +28,10 @@ public class PlayField extends JComponent {
         this.height = height;
         this.width = width;
 
+
+
         fields = Level.generateLevel(LevelType.TUTORIAL, height, width);
+
         player = new Player(1, 1);
         fields.get(1).set(1, player);
 
@@ -165,4 +170,5 @@ public class PlayField extends JComponent {
             );
         }
     }
+
 }
