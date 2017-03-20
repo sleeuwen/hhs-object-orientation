@@ -17,9 +17,9 @@ public class Wall extends Field {
         if (image == null) loadImage();
     }
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/solidTree.png"));
+            image = ImageIO.read(Wall.class.getResource("/img/solidTree.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

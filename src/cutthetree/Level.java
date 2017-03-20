@@ -1,6 +1,7 @@
 package cutthetree;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -36,28 +37,28 @@ public class Level {
             BufferedReader in = new BufferedReader(new FileReader(file));
 
             String line;
-            int x = 0;
+            int y = 0;
             while ((line = in.readLine()) != null) {
                 if (line.trim().isEmpty()) break;
 
-                for (int y = 0; y < line.length(); y++) {
-                    if (fields.size() <= y) fields.add(new ArrayList<>());
+                for (int x = 0; x < line.length(); x++) {
+                    if (fields.size() <= x) fields.add(new ArrayList<>());
 
-                    char chr = line.charAt(y);
+                    char chr = line.charAt(x);
                     if (chr == 'W') {
-                        fields.get(y).add(new Wall(y, x));
+                        fields.get(x).add(new Wall(x, y));
                     } else if (chr == 'F') {
-                        fields.get(y).add(new Finish(y, x));
+                        fields.get(x).add(new Finish(x, y));
                     } else if (chr >= '1' && chr <= '6') {
-                        fields.get(y).add(new Lumberaxe(y, x, Color.values()[chr - '1']));
+                        fields.get(x).add(new Lumberaxe(x, y, Color.values()[chr - '1']));
                     } else if (chr >= 'a' && chr <= 'f') {
-                        fields.get(y).add(new Tree(y, x, Color.values()[chr - 'a']));
+                        fields.get(x).add(new Tree(x, y, Color.values()[chr - 'a']));
                     } else {
-                        fields.get(y).add(new Field(y, x));
+                        fields.get(x).add(new Field(x, y));
                     }
                 }
 
-                x++;
+                y++;
             }
         } catch (Exception e) {
             e.printStackTrace();

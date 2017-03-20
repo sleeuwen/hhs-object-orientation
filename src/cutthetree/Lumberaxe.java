@@ -15,12 +15,16 @@ public class Lumberaxe extends Field {
         if (image == null) loadImage();
     }
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/axes.png"));
+            image = ImageIO.read(Lumberaxe.class.getResource("/img/axes.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override
@@ -37,9 +41,5 @@ public class Lumberaxe extends Field {
                 offset, 0, offset + SIZE, SIZE, // Source position
                 null
         );
-    }
-
-    public Color getColor() {
-        return color;
     }
 }

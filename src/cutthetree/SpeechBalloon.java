@@ -17,9 +17,9 @@ public class SpeechBalloon extends Field {
         if (font == null) loadFont();
     }
 
-    private void loadFont() {
+    private static void loadFont() {
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(12f);
+            font = Font.createFont(Font.TRUETYPE_FONT, SpeechBalloon.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(12f);
         } catch (Exception e) {
             e.printStackTrace();
         }

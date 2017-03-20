@@ -18,14 +18,21 @@ public class Tree extends Field {
         this.color = color;
         if (image == null) loadImage();
     }
-    public Color getColor(){return this.color;}
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/colorTree.png"));
+            image = ImageIO.read(Tree.class.getResource("/img/colorTree.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    public boolean cut(Lumberaxe axe) {
+        return axe != null && color == axe.getColor();
     }
 
     @Override
@@ -43,10 +50,4 @@ public class Tree extends Field {
                 null
         );
     }
-
-    public boolean cut(Lumberaxe axe) {
-        if (axe != null && color == axe.getColor()) return true;
-        return false;
-    }
-
 }

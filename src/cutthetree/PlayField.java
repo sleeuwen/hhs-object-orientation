@@ -1,14 +1,10 @@
 package cutthetree;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,18 +13,12 @@ import java.util.ArrayList;
  */
 public class PlayField extends JComponent {
     private static Image imageAxe;
-    private static Image image;
-    private static Image imageMenu;
+    private static Image imageBackpack;
 
     private boolean finished = false;
 
     private int height, width;
     private Player player;
-
-    private int selected = 0;
-    private Font font;
-
-
 
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
@@ -64,7 +54,6 @@ public class PlayField extends JComponent {
                         case KeyEvent.VK_SPACE:
                             checkTree();
                             break;
-
                     }
                 }
 
@@ -72,50 +61,46 @@ public class PlayField extends JComponent {
             }
         });
 
-        if (image == null || imageAxe == null) loadImage();
-        loadFont();
+        if (imageBackpack == null || imageAxe == null) loadImages();
     }
 
-    private void checkTree() {
-        switch (player.getDirection()){
-            case UP:
-                cut(0,-1);
-                break;
-            case DOWN:
-                cut(0,1);
-                break;
-            case LEFT:
-                cut(-1,0);
-                break;
-            case RIGHT:
-                cut(1,0);
-                break;
-        }
-    }
-
-
-    private void loadImage() {
+    private static void loadImages() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/backpack-icon.png"));
-            imageAxe = ImageIO.read(getClass().getResource("/img/axes.png"));
-
+            imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
+            imageAxe = ImageIO.read(PlayField.class.getResource("/img/axes.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void cut(int dx, int dy){
+    private void checkTree() {
+        switch (player.getDirection()) {
+            case UP:
+                cut(0, -1);
+                break;
+            case DOWN:
+                cut(0, 1);
+                break;
+            case LEFT:
+                cut(-1, 0);
+                break;
+            case RIGHT:
+                cut(1, 0);
+                break;
+        }
+    }
+
+    private void cut(int dx, int dy) {
         int x = player.xPos;
         int y = player.yPos;
 
-        if (!fields.get(x + dx).get(y + dy).isSolid() || fields.get(x + dx).get(y + dy) instanceof Wall) {
-            return;
-        }
-        Tree tree = (Tree)fields.get(x + dx).get(y + dy);
-        if(tree.cut(player.getAxe())){
-            fields.get(x + dx).set(y +dy, new Field(x+dx, y+dy));
+        if (!(fields.get(x + dx).get(y + dy) instanceof Tree)) return;
+
+        Tree tree = (Tree) fields.get(x + dx).get(y + dy);
+        if (tree.cut(player.getAxe())) {
+            fields.get(x + dx).set(y + dy, new Field(x + dx, y + dy));
             Game.loadSound("chopping.wav");
-        }else {
+        } else {
             player.say("I need a " + tree.getColor() + " axe to cut this tree");
         }
     }
@@ -126,20 +111,21 @@ public class PlayField extends JComponent {
         int x = player.xPos;
         int y = player.yPos;
 
-        if (fields.get(x + dx).get(y + dy).isSolid()) {
-            return;
-        }
+        if (fields.get(x + dx).get(y + dy).isSolid()) return;
 
         if (fields.get(x + dx).get(y + dy) instanceof Lumberaxe) {
             player.grabLumberaxe((Lumberaxe) fields.get(x + dx).get(y + dy));
             Game.loadSound("grab.wav");
         }
+
         if (fields.get(x + dx).get(y + dy) instanceof Finish) {
             Game.loadSound("winning.wav");
             finished = true;
             fields.get(x).set(y, new Field(x, y));
+
             return;
         }
+
         player.move(dx, dy);
         fields.get(x).set(y, new Field(x, y));
         fields.get(x + dx).set(y + dy, player);
@@ -155,15 +141,8 @@ public class PlayField extends JComponent {
             }
         }
 
-
-
         paintBackpack(g);
-        if(!finished) player.paint(g);
-
-    }
-    private void drawCentered(Graphics g, String str, int y) {
-        int width = g.getFontMetrics().stringWidth(str);
-        g.drawString(str, PlayFrame.FRAME_WIDTH / 2 - width / 2, y);
+        if (!finished) player.paint(g);
 
     }
 
@@ -171,7 +150,7 @@ public class PlayField extends JComponent {
         int x = (width - 1) * Field.SIZE;
         int y = 0;
 
-        g.drawImage(image, x, y, null);
+        g.drawImage(imageBackpack, x, y, null);
 
         if (player.getAxe() != null) {
             int offset = player.getAxe().getColor().ordinal() * Field.SIZE;
@@ -182,13 +161,6 @@ public class PlayField extends JComponent {
                     offset, 0, offset + Field.SIZE, Field.SIZE, // Source position
                     null
             );
-        }
-    }
-    private void loadFont() {
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

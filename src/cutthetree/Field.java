@@ -22,19 +22,19 @@ public class Field {
         if (grass == null) loadImage();
     }
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            grass = ImageIO.read(getClass().getResource("/img/grass.png"));
+            grass = ImageIO.read(Field.class.getResource("/img/grass.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void paint(Graphics g) {
-        g.drawImage(grass, xPos * SIZE, yPos * SIZE, null);
-    }
-
     public boolean isSolid() {
         return isSolid;
+    }
+
+    public void paint(Graphics g) {
+        g.drawImage(grass, xPos * SIZE, yPos * SIZE, null);
     }
 }

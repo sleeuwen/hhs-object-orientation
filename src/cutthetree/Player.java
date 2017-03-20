@@ -18,9 +18,9 @@ public class Player extends Field {
         if (image == null) loadImage();
     }
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/playerSprite.png"));
+            image = ImageIO.read(Player.class.getResource("/img/playerSprite.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,7 +34,22 @@ public class Player extends Field {
     public void changeDirection(Direction direction) {
         this.direction = direction;
     }
-    public Direction getDirection(){return this.direction;}
+
+    public Direction getDirection() {
+        return this.direction;
+    }
+
+    public void grabLumberaxe(Lumberaxe axe) {
+        this.axe = axe;
+    }
+
+    public Lumberaxe getAxe() {
+        return this.axe;
+    }
+
+    public void say(String text) {
+        message = text;
+    }
 
     @Override
     public void paint(Graphics g) {
@@ -50,20 +65,9 @@ public class Player extends Field {
                 150, offset, 225, offset + SIZE, // Source position
                 null
         );
-        if (!message.isEmpty()){
-            new SpeechBalloon(xPos,yPos,message).paint(g);
+
+        if (!message.isEmpty()) {
+            new SpeechBalloon(xPos, yPos, message).paint(g);
         }
-    }
-
-    public void grabLumberaxe(Lumberaxe axe) {
-        this.axe = axe;
-    }
-
-    public Lumberaxe getAxe() {
-        return this.axe;
-    }
-
-    public void say(String text){
-        message = text;
     }
 }
