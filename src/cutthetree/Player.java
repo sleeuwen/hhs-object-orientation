@@ -8,6 +8,7 @@ public class Player extends Field {
     private static Image image;
 
     private Lumberaxe axe;
+    private String message = "";
 
     private Direction direction = Direction.DOWN;
 
@@ -33,6 +34,7 @@ public class Player extends Field {
     public void changeDirection(Direction direction) {
         this.direction = direction;
     }
+    public Direction getDirection(){return this.direction;}
 
     @Override
     public void paint(Graphics g) {
@@ -48,6 +50,9 @@ public class Player extends Field {
                 150, offset, 225, offset + SIZE, // Source position
                 null
         );
+        if (!message.isEmpty()){
+            new SpeechBalloon(xPos,yPos,message).paint(g);
+        }
     }
 
     public void grabLumberaxe(Lumberaxe axe) {
@@ -56,5 +61,9 @@ public class Player extends Field {
 
     public Lumberaxe getAxe() {
         return this.axe;
+    }
+
+    public void say(String text){
+        message = text;
     }
 }

@@ -18,6 +18,7 @@ public class Tree extends Field {
         this.color = color;
         if (image == null) loadImage();
     }
+    public Color getColor(){return this.color;}
 
     private void loadImage() {
         try {
@@ -44,6 +45,8 @@ public class Tree extends Field {
     }
 
     public boolean cut(Lumberaxe axe) {
+        if (axe != null && color == axe.getColor()) return true;
         return false;
     }
+
 }
