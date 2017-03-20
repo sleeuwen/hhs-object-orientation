@@ -29,7 +29,6 @@ public class Game extends JComponent {
             public void keyPressed(KeyEvent e) {
                 if (!playScreen) {
                     playField.dispatchEvent(e);
-                    return;
                 }
 
                 switch (e.getKeyCode()) {
@@ -93,10 +92,8 @@ public class Game extends JComponent {
 
                 drawCentered(g, choices[i], 420 + (i * 32));
             }
-
         } else {
             playField.paintComponent(g);
-
         }
     }
 
