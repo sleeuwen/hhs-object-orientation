@@ -46,7 +46,7 @@ public class SpeechBalloon extends Field {
 
         // Draw balloon
         RoundRectangle2D rectangle = new RoundRectangle2D.Float(
-                x - width / 2 - 5,
+                Math.max(PADDING, Math.min(PlayFrame.FRAME_WIDTH - width - PADDING * 2, x - width / 2 - 5)),
                 y - 10 - PADDING - (height * lines.length),
                 width + PADDING,
                 height * lines.length + PADDING,
@@ -64,8 +64,8 @@ public class SpeechBalloon extends Field {
         ));
 
         // Draw message
-        x = x - (width / 2) + PADDING;
-        y = y - 12 - (PADDING / 2) - (height * (lines.length - 1));
+        x = (int) rectangle.getX() + PADDING + 5;
+        y = (int) rectangle.getY() + height + 2;
 
         g.setColor(Color.BLACK);
         for (int i = 0; i < lines.length; i++) {
