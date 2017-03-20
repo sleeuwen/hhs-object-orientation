@@ -1,5 +1,7 @@
 package cutthetree;
 
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -7,137 +9,58 @@ import java.util.ArrayList;
  */
 public class Level {
     static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int height, int width) {
-        ArrayList<ArrayList<Field>> fields = new ArrayList<>();
+        if (type == LevelType.RANDOM) {
+            throw new UnsupportedOperationException("Levels of type random are not yet supported.");
+        } else {
+            URL resource = Level.class.getResource("/level/" + type.toString().toLowerCase() + ".txt");
 
-        switch (type) {
-            case RANDOM:
-                break;
-            case TUTORIAL:
-                return getTutorialField();
-            case EASY:
-                break;
-            case MEDIUM:
-                break;
-            case HARD:
-                break;
+            if (resource != null) {
+                return loadLevel(resource.getFile());
+            } else {
+                throw new UnsupportedOperationException("Levels of type " + type.toString().toLowerCase() + " are not yet supported.");
+            }
         }
-
-        return fields;
     }
 
-    static private ArrayList<ArrayList<Field>> getTutorialField() {
+    private static ArrayList<ArrayList<Field>> loadLevel(String file) {
+        // Load a level from a given file path following the given spec:
+        // W: Wall
+        // F: Finish
+        // 1-6: Different colored Lumberaxe
+        // a-f: Different colored Tree
+        // Anything else as Field
+
         ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
-            ArrayList<Field> singleFields = new ArrayList<>();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(file));
 
-            for (int j = 0; j < 12; j++) {
-                if (j == 0 || j == 11 || i == 0 || i == 11) {
-                    singleFields.add(new Wall(i, j));
-                    continue;
+            String line;
+            int x = 0;
+            while ((line = in.readLine()) != null) {
+                if (line.trim().isEmpty()) break;
+
+                for (int y = 0; y < line.length(); y++) {
+                    if (fields.size() <= y) fields.add(new ArrayList<>());
+
+                    char chr = line.charAt(y);
+                    if (chr == 'W') {
+                        fields.get(y).add(new Wall(y, x));
+                    } else if (chr == 'F') {
+                        fields.get(y).add(new Finish(y, x));
+                    } else if (chr >= '1' && chr <= '6') {
+                        fields.get(y).add(new Lumberaxe(y, x, Color.values()[chr - '1']));
+                    } else if (chr >= 'a' && chr <= 'f') {
+                        fields.get(y).add(new Tree(y, x, Color.values()[chr - 'a']));
+                    } else {
+                        fields.get(y).add(new Field(y, x));
+                    }
                 }
 
-                if (i == 1) {
-                    singleFields.add(j == 9 ? new Lumberaxe(i, j, Color.PURPLE) : new Field(i, j));
-                } else if (i == 2) {
-                    singleFields.add(new Wall(i, 1));
-                    singleFields.add(new Field(i, 2));
-                    singleFields.add(new Field(i, 3));
-                    singleFields.add(new Wall(i, 4));
-                    singleFields.add(new Wall(i, 5));
-                    singleFields.add(new Tree(i, 6, Color.PURPLE));
-                    singleFields.add(new Wall(i, 7));
-                    singleFields.add(new Wall(i, 8));
-                    singleFields.add(new Wall(i, 9));
-                    singleFields.add(new Wall(i, 10));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                } else if (i == 3) {
-                    singleFields.add(j == 2 ? new Field(i, j) : new Tree(i, j, Color.RED));
-                } else if (i == 4) {
-                    singleFields.add(new Field(i, 1));
-                    singleFields.add(new Field(i, 2));
-                    singleFields.add(new Field(i, 3));
-                    singleFields.add(new Field(i, 4));
-                    singleFields.add(new Tree(i, 5, Color.RED));
-                    singleFields.add(new Field(i, 6));
-                    singleFields.add(new Wall(i, 7));
-                    singleFields.add(new Tree(i, 8, Color.BLUE));
-                    singleFields.add(new Tree(i, 9, Color.WHITE));
-                    singleFields.add(new Tree(i, 10, Color.BLUE));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                } else if (i == 5) {
-                    singleFields.add(new Field(i, 1));
-                    singleFields.add(new Lumberaxe(i, 2, Color.RED));
-                    singleFields.add(new Field(i, 3));
-                    singleFields.add(new Field(i, 4));
-                    singleFields.add(new Wall(i, 5));
-                    singleFields.add(new Field(i, 6));
-                    singleFields.add(new Wall(i, 7));
-                    singleFields.add(new Tree(i, 8, Color.WHITE));
-                    singleFields.add(new Field(i, 9));
-                    singleFields.add(new Field(i, 10));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                } else if (i == 6) {
-                    singleFields.add(new Field(i, 1));
-                    singleFields.add(new Lumberaxe(i, 2, Color.YELLOW));
-                    singleFields.add(new Field(i, 3));
-                    singleFields.add(new Field(i, 4));
-                    singleFields.add(new Wall(i, 5));
-                    singleFields.add(new Field(i, 6));
-                    singleFields.add(new Tree(i, 7, Color.YELLOW));
-                    singleFields.add(new Tree(i, 8, Color.RED));
-                    singleFields.add(new Field(i, 9));
-                    singleFields.add(new Field(i, 10));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                } else if (i == 7) {
-                    singleFields.add((j == 5 || j == 6 || j == 7) ? new Wall(i, j) : new Field(i, j));
-                } else if (i == 8) {
-                    singleFields.add(new Tree(i, 1, Color.WHITE));
-                    singleFields.add(new Tree(i, 2, Color.WHITE));
-                    singleFields.add(new Tree(i, 3, Color.YELLOW));
-                    singleFields.add(new Tree(i, 4, Color.BLUE));
-                    singleFields.add(new Tree(i, 5, Color.WHITE));
-                    singleFields.add(new Tree(i, 6, Color.RED));
-                    singleFields.add(new Wall(i, 7));
-                    singleFields.add(new Field(i, 8));
-                    singleFields.add(new Wall(i, 9));
-                    singleFields.add(new Wall(i, 10));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                } else if (i == 9) {
-                    singleFields.add(new Tree(i, 1, Color.WHITE));
-                    singleFields.add(new Tree(i, 2, Color.BLUE));
-                    singleFields.add(new Tree(i, 3, Color.YELLOW));
-                    singleFields.add(new Tree(i, 4, Color.BLUE));
-                    singleFields.add(new Tree(i, 5, Color.WHITE));
-                    singleFields.add(new Tree(i, 6, Color.YELLOW));
-                    singleFields.add(new Field(i, 7));
-                    singleFields.add(new Field(i, 8));
-                    singleFields.add(new Field(i, 9));
-                    singleFields.add(new Field(i, 10));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                } else if (i == 10) {
-                    singleFields.add(new Tree(i, 1, Color.BLUE));
-                    singleFields.add(new Tree(i, 2, Color.WHITE));
-                    singleFields.add(new Lumberaxe(i, 3, Color.RED));
-                    singleFields.add(new Tree(i, 4, Color.BLACK));
-                    singleFields.add(new Tree(i, 5, Color.BLACK));
-                    singleFields.add(new Field(i, 6));
-                    singleFields.add(new Field(i, 7));
-                    singleFields.add(new Field(i, 8));
-                    singleFields.add(new Field(i, 9));
-                    singleFields.add(new Finish(i, 10));
-                    singleFields.add(new Wall(i, 11));
-                    break;
-                }
+                x++;
             }
-
-            fields.add(singleFields);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return fields;
