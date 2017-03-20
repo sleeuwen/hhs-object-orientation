@@ -29,6 +29,9 @@ public class Game extends JComponent {
     private boolean selectLevel;
     private int difficulty = 0;
     private Clip clip;
+    private Image imageF;
+    private Image imageT;
+
 
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
@@ -118,6 +121,8 @@ public class Game extends JComponent {
     private void loadImage() {
         try {
             image = ImageIO.read(getClass().getResource("/img/menuBackground.png"));
+            imageF = ImageIO.read(getClass().getResource("/img/menuField.png"));
+            imageT = ImageIO.read(getClass().getResource("/img/menuTitle.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,11 +135,13 @@ public class Game extends JComponent {
             g.setFont(font);
             g.drawImage(image, 0, 0, null);
 
-            g.setColor(Color.lightGray);
-            g.fillRect(225, 232, 450, 464);
+            g.drawImage(imageF,225,232,450,464,null);
+//            g.setColor(Color.lightGray);
+//            g.fillRect(225, 232, 450, 464);
 
             g.setColor(Color.WHITE);
-            drawCentered(g, "CutThaTree", 150);
+            g.drawImage(imageT,getWidth()/2-200,120,null);
+
 
             String[] choices = selectLevel ? levels : this.choices;
             for (int i = 0; i < choices.length; i++) {
