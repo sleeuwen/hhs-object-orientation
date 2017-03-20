@@ -15,6 +15,8 @@ public class PlayField extends JComponent {
     private static Image imageAxe;
     private static Image image;
 
+    private boolean pause = false;
+
     private int height, width;
     private Player player;
 
@@ -49,6 +51,15 @@ public class PlayField extends JComponent {
                     case KeyEvent.VK_RIGHT:
                         walk(Direction.RIGHT, 1, 0);
                         break;
+                    case KeyEvent.VK_SPACE:
+                        cut();
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        pause = !pause;
+                        if(pause){
+                            //// TODO: 20-3-2017 playscreen
+                        }
+                        break;
                 }
 
                 repaint();
@@ -60,6 +71,10 @@ public class PlayField extends JComponent {
         });
 
         if (image == null || imageAxe == null) loadImage();
+    }
+
+    private void cut() {
+
     }
 
     private void loadImage() {
