@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Created by The lion kings on 20-3-2017.
@@ -39,8 +40,15 @@ public class Game extends JComponent {
     private Image imageFx;
     private Image imageNoFx;
 
-    private boolean sound = true,fx = true;
+    private static boolean sound = true,fx = true;
 
+
+    private static String[] sounds = new String[]{
+        "opening","winning"
+    };
+    private static String[] effects = new String[]{
+            "chopping","grab"
+    };
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
     };
@@ -79,6 +87,7 @@ public class Game extends JComponent {
                                 }
                                 if(selected == 2) {
                                     playScreen = true;
+                                    Game.loadSound("opening.wav");
                                 }
                                 selected = 0;
                                 pause = false;
@@ -171,9 +180,11 @@ public class Game extends JComponent {
 
     public static void loadSound(String filename){
         try {
-            clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(Game.class.getResource("/sound/" + filename).getFile())));
-            clip.start();
+            if((sound && Arrays.asList(sounds).contains(filename.split("\\.")[0])) || (fx && Arrays.asList(effects).contains(filename.split("\\.")[0]))){
+                clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(new File(Game.class.getResource("/sound/" + filename).getFile())));
+                clip.start();
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
