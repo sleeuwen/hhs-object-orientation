@@ -133,18 +133,24 @@ public class Game extends JComponent {
                 int x = e.getX();
                 int y = e.getY();
 
-                if (x > 240 && x < 280 && y > 640 && y < 680) {
-                    sound = !sound;
 
-                    if (sound) {
-                        clip.start();
-                    } else {
-                        clip.stop();
+                if(paused){
+                    if (x > 168 && x < 208 && y > 594 && y < 636) sound = !sound;
+                    if (x > 213 && x < 253 && y > 594 && y < 636) fx = !fx;
+                }else
+                {
+                    if (x > 240 && x < 280 && y > 640 && y < 680) {
+                        sound = !sound;
+
+                        if (sound) {
+                            clip.start();
+                        } else {
+                            clip.stop();
+                        }
                     }
+                    if (x > 285 && x < 325 && y > 640 && y < 680) fx = !fx;
+
                 }
-
-                if (x > 285 && x < 325 && y > 640 && y < 680) fx = !fx;
-
                 repaint();
             }
         });
@@ -217,6 +223,8 @@ public class Game extends JComponent {
             if (paused) {
                 g.drawImage(imagePaused, 0, 0, null);
                 g.setFont(font);
+                g.drawImage(sound ? imageSound : imageNoSound, 168, 594, null);
+                g.drawImage(fx ? imageFx : imageNoFx, 213, 594, null);
 
                 for (int i = 0; i < choicesMenu.length; i++) {
                     g.setColor(i == selected ? Color.RED : Color.WHITE);
