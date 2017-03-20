@@ -89,6 +89,12 @@ public class PlayField extends JComponent {
         }
     }
 
+    private void Restart(){
+        pause = false;
+        finished = false;
+        new PlayField(12,12);
+    }
+
     private void loadImage() {
         try {
             image = ImageIO.read(getClass().getResource("/img/backpack-icon.png"));
