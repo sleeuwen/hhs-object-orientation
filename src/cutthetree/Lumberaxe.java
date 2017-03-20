@@ -23,6 +23,10 @@ public class Lumberaxe extends Field {
         }
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -37,9 +41,5 @@ public class Lumberaxe extends Field {
                 offset, 0, offset + SIZE, SIZE, // Source position
                 null
         );
-    }
-
-    public Color getColor() {
-        return color;
     }
 }
