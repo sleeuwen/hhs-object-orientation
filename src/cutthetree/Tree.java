@@ -20,9 +20,9 @@ public class Tree extends Field {
     }
     public Color getColor(){return this.color;}
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/colorTree.png"));
+            image = ImageIO.read(Tree.class.getResource("/img/colorTree.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

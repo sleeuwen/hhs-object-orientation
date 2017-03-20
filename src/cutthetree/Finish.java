@@ -12,12 +12,13 @@ public class Finish extends Field {
 
     public Finish(int x, int y) {
         super(x, y);
+
         if (image == null) loadImage();
     }
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/house.png"));
+            image = ImageIO.read(Finish.class.getResource("/img/house.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -26,6 +27,7 @@ public class Finish extends Field {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
         g.drawImage(image, xPos * SIZE, yPos * SIZE, null);
     }
 }

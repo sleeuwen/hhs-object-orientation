@@ -18,9 +18,9 @@ public class Player extends Field {
         if (image == null) loadImage();
     }
 
-    private void loadImage() {
+    private static void loadImage() {
         try {
-            image = ImageIO.read(getClass().getResource("/img/playerSprite.png"));
+            image = ImageIO.read(Player.class.getResource("/img/playerSprite.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
