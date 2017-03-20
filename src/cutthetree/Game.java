@@ -55,11 +55,11 @@ public class Game extends JComponent {
                 if (!playScreen) {
 
                     if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                        pause = true;
+                        pause = !pause;
                         repaint();
                         return;
                     }
-                    if(pause) {
+                    else if(pause) {
                         switch (e.getKeyCode()) {
                             case KeyEvent.VK_UP:
                                 if(selected>0){
@@ -72,15 +72,11 @@ public class Game extends JComponent {
                             case KeyEvent.VK_ENTER:
                                 if(selected == 1){
                                    playField = new PlayField(12,12);
-
                                 }
                                 if(selected == 2) {
                                     playScreen = true;
                                 }
                                 selected = 0;
-                                pause = false;
-                                break;
-                            case KeyEvent.VK_ESCAPE:
                                 pause = false;
                                 break;
 
