@@ -26,10 +26,16 @@ public class Game extends JComponent {
     private Font font;
     private PlayField playField;
     private int selected = 0;
+    private boolean selectLevel;
+    private int difficulty = 0;
     private Clip clip;
 
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
+    };
+
+    private String[] levels = new String[]{
+            "Tutorial", "Easy", "Medium", "Hard", "Back"
     };
 
     public Game() {
@@ -43,16 +49,38 @@ public class Game extends JComponent {
 
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ENTER:
-                        if (selected == 0) {
-                            playField = new PlayField(12, 12);
-                            playScreen = false;
-                            clip.stop();
+                        if(!selectLevel){
+                            if (selected == 0) {
+                                playField = new PlayField(12,12);
+                                playScreen = false;
+                                clip.stop();
+                                repaint();
+
+                            }
+                            if (selected == 1){
+                                selectLevel = true;
+                                selected = 0;
+                                repaint();
+                            }
+                            if (selected == 2){
+                                System.exit(0);
+                            }
+                        }else{
+
+                            if(selected != 4){
+                                difficulty = selected;
+
+                            }
+                            selectLevel = false;
+                            selected = 0;
+                            repaint();
                         }
                         break;
                     case KeyEvent.VK_UP:
                         if (selected > 0) selected--;
                         break;
                     case KeyEvent.VK_DOWN:
+                        String[] choices = selectLevel ? levels : Game.this.choices;
                         if (selected < choices.length - 1) selected++;
                         break;
                 }
@@ -108,6 +136,7 @@ public class Game extends JComponent {
             g.setColor(Color.WHITE);
             drawCentered(g, "CutThaTree", 150);
 
+            String[] choices = selectLevel ? levels : this.choices;
             for (int i = 0; i < choices.length; i++) {
                 if (i == selected) {
                     g.setColor(Color.RED);
