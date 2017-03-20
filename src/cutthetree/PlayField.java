@@ -19,6 +19,7 @@ public class PlayField extends JComponent {
     private static Image image;
 
     private boolean pause = false;
+    private boolean finished = false;
 
     private int height, width;
     private Player player;
@@ -39,30 +40,31 @@ public class PlayField extends JComponent {
             @Override
             public void keyPressed(KeyEvent e) {
                 player.say("");
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_UP:
-                        walk(Direction.UP, 0, -1);
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        walk(Direction.DOWN, 0, 1);
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        walk(Direction.LEFT, -1, 0);
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        walk(Direction.RIGHT, 1, 0);
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        checkTree();
-                        break;
-                    case KeyEvent.VK_ESCAPE:
-                        pause = !pause;
-                        if (pause) {
-                            //// TODO: 20-3-2017 playscreen
-                        }
-                        break;
+                if (!finished) {
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_UP:
+                            walk(Direction.UP, 0, -1);
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            walk(Direction.DOWN, 0, 1);
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            walk(Direction.LEFT, -1, 0);
+                            break;
+                        case KeyEvent.VK_RIGHT:
+                            walk(Direction.RIGHT, 1, 0);
+                            break;
+                        case KeyEvent.VK_SPACE:
+                            checkTree();
+                            break;
+                        case KeyEvent.VK_ESCAPE:
+                            pause = !pause;
+                            if (pause) {
+                                //// TODO: 20-3-2017 playscreen
+                            }
+                            break;
+                    }
                 }
-
                 repaint();
             }
         });
@@ -136,7 +138,12 @@ public class PlayField extends JComponent {
             player.grabLumberaxe((Lumberaxe) fields.get(x + dx).get(y + dy));
             loadSound("grab.wav");
         }
-
+        if (fields.get(x + dx).get(y + dy) instanceof Finish) {
+            loadSound("winning.wav");
+            finished = true;
+            fields.get(x).set(y, new Field(x, y));
+            return;
+        }
         player.move(dx, dy);
         fields.get(x).set(y, new Field(x, y));
         fields.get(x + dx).set(y + dy, player);
@@ -153,7 +160,7 @@ public class PlayField extends JComponent {
         }
 
         paintBackpack(g);
-        player.paint(g);
+        if(!finished) player.paint(g);
     }
 
     private void paintBackpack(Graphics g) {
