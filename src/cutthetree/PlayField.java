@@ -38,6 +38,7 @@ public class PlayField extends JComponent {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                player.say("");
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         walk(Direction.UP, 0, -1);
@@ -52,7 +53,7 @@ public class PlayField extends JComponent {
                         walk(Direction.RIGHT, 1, 0);
                         break;
                     case KeyEvent.VK_SPACE:
-                        cut();
+                        checkTree();
                         break;
                     case KeyEvent.VK_ESCAPE:
                         pause = !pause;
@@ -73,8 +74,21 @@ public class PlayField extends JComponent {
         if (image == null || imageAxe == null) loadImage();
     }
 
-    private void cut() {
-
+    private void checkTree() {
+        switch (player.getDirection()){
+            case UP:
+                cut(0,-1);
+                break;
+            case DOWN:
+                cut(0,1);
+                break;
+            case LEFT:
+                cut(-1,0);
+                break;
+            case RIGHT:
+                cut(1,0);
+                break;
+        }
     }
 
     private void loadImage() {
@@ -83,6 +97,21 @@ public class PlayField extends JComponent {
             imageAxe = ImageIO.read(getClass().getResource("/img/axes.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void cut(int dx, int dy){
+        int x = player.xPos;
+        int y = player.yPos;
+
+        if (!fields.get(x + dx).get(y + dy).isSolid() || fields.get(x + dx).get(y + dy) instanceof Wall) {
+            return;
+        }
+        Tree tree = (Tree)fields.get(x + dx).get(y + dy);
+        if(tree.cut(player.getAxe())){
+            fields.get(x + dx).set(y +dy, new Field(x+dx, y+dy));
+        }else {
+            player.say("I need a " + tree.getColor() + " axe to cut this tree");
         }
     }
 
@@ -116,6 +145,7 @@ public class PlayField extends JComponent {
         }
 
         paintBackpack(g);
+        player.paint(g);
     }
 
     private void paintBackpack(Graphics g) {
