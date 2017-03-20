@@ -13,6 +13,6 @@ public class PlayFrame extends JFrame {
         getContentPane().setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-        add(new PlayField(12, 12));
+        add(new Game());
     }
 }
