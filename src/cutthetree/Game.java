@@ -34,6 +34,9 @@ public class Game extends JComponent {
     private Image imageNoSound;
     private Image imageFx;
     private Image imageNoFx;
+    private int finishSelected = 0;
+
+    private static boolean finished = false;
 
     private static int currentLevel;
 
@@ -56,12 +59,16 @@ public class Game extends JComponent {
             "Tutorial", "Easy", "Medium", "Hard", "Back"
     };
 
+    private String[] finishMenu = new String[]{
+            "Exit"
+    };
+
     public Game() {
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (!playScreen) {
+                if (!playScreen && !finished) {
                     if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                         paused = !paused;
                     } else if (paused) {
@@ -74,7 +81,7 @@ public class Game extends JComponent {
                                 break;
                             case KeyEvent.VK_ENTER:
                                 if (selected == 1) {
-                                    playField = new PlayField(12, 12,LevelType.values()[difficulty],currentLevel);
+                                    playField = new PlayField(12, 12, LevelType.values()[difficulty], currentLevel);
                                 } else if (selected == 2) {
                                     playScreen = true;
                                     Game.loadSound("opening.wav");
@@ -90,13 +97,20 @@ public class Game extends JComponent {
                     }
 
                     return;
+                } else if (!playScreen && finished) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        playScreen = true;
+                        finished = false;
+                    }
+
+                    return;
                 }
 
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ENTER:
                         if (!selectLevel) {
                             if (selected == 0) {
-                                playField = new PlayField(12, 12,LevelType.values()[difficulty],0);
+                                playField = new PlayField(12, 12, LevelType.values()[difficulty], 0);
                                 playScreen = false;
                                 clip.stop();
                             } else if (selected == 1) {
@@ -251,11 +265,24 @@ public class Game extends JComponent {
                     drawCentered(g, choicesMenu[i], 420 + (i * 32));
                 }
             }
+
+            if (finished) {
+                for (int i = 0; i < finishMenu.length; i++) {
+                    g.setFont(font);
+                    g.setColor(i == selected ? Color.RED : Color.WHITE);
+
+                    drawCentered(g, finishMenu[i], 420 + (i*32));
+                }
+            }
         }
     }
 
     private void drawCentered(Graphics g, String str, int y) {
         int width = g.getFontMetrics().stringWidth(str);
         g.drawString(str, getWidth() / 2 - width / 2, y);
+    }
+
+    public static void setFinished(boolean b){
+        finished = b;
     }
 }
