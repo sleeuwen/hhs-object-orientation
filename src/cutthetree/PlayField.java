@@ -41,19 +41,19 @@ public class PlayField extends JComponent {
                 if (!finished) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_UP:
-                            walk(Direction.UP, 0, -1);
+                            walk(Direction.UP);
                             break;
                         case KeyEvent.VK_DOWN:
-                            walk(Direction.DOWN, 0, 1);
+                            walk(Direction.DOWN);
                             break;
                         case KeyEvent.VK_LEFT:
-                            walk(Direction.LEFT, -1, 0);
+                            walk(Direction.LEFT);
                             break;
                         case KeyEvent.VK_RIGHT:
-                            walk(Direction.RIGHT, 1, 0);
+                            walk(Direction.RIGHT);
                             break;
                         case KeyEvent.VK_SPACE:
-                            checkTree();
+                            cut();
                             break;
                     }
                 }
@@ -73,30 +73,13 @@ public class PlayField extends JComponent {
         }
     }
 
-    private void checkTree() {
-        switch (player.getDirection()) {
-            case UP:
-                cut(0, -1);
-                break;
-            case DOWN:
-                cut(0, 1);
-                break;
-            case LEFT:
-                cut(-1, 0);
-                break;
-            case RIGHT:
-                cut(1, 0);
-                break;
-        }
-    }
+    private void cut() {
+        int x = player.xPos + player.getDirection().getDx();
+        int y = player.yPos + player.getDirection().getDy();
 
-    private void cut(int dx, int dy) {
-        int x = player.xPos;
-        int y = player.yPos;
+        if (!(fields.get(x).get(y) instanceof Tree)) return;
 
-        if (!(fields.get(x + dx).get(y + dy) instanceof Tree)) return;
-
-        Tree tree = (Tree) fields.get(x + dx).get(y + dy);
+        Tree tree = (Tree) fields.get(x).get(y);
         if (!tree.isSolid()) return;
 
         if (tree.cut(player.getAxe())) {
@@ -106,11 +89,14 @@ public class PlayField extends JComponent {
         }
     }
 
-    private void walk(Direction direction, int dx, int dy) {
+    private void walk(Direction direction) {
         player.changeDirection(direction);
 
         int x = player.xPos;
         int y = player.yPos;
+
+        int dx = direction.getDx();
+        int dy = direction.getDy();
 
         if (fields.get(x + dx).get(y + dy).isSolid()) return;
 
