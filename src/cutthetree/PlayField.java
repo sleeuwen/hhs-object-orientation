@@ -56,8 +56,6 @@ public class PlayField extends JComponent {
                             break;
                     }
                 }
-
-                repaint();
             }
         });
 
@@ -97,8 +95,9 @@ public class PlayField extends JComponent {
         if (!(fields.get(x + dx).get(y + dy) instanceof Tree)) return;
 
         Tree tree = (Tree) fields.get(x + dx).get(y + dy);
+        if (!tree.isSolid()) return;
+
         if (tree.cut(player.getAxe())) {
-            fields.get(x + dx).set(y + dy, new Field(x + dx, y + dy));
             Game.loadSound("chopping.wav");
         } else {
             player.say("I need a " + tree.getColor() + " axe to cut this tree");
@@ -113,6 +112,8 @@ public class PlayField extends JComponent {
 
         if (fields.get(x + dx).get(y + dy).isSolid()) return;
 
+        if (!player.move(dx, dy)) return;
+
         if (fields.get(x + dx).get(y + dy) instanceof Lumberaxe) {
             player.grabLumberaxe((Lumberaxe) fields.get(x + dx).get(y + dy));
             Game.loadSound("grab.wav");
@@ -126,7 +127,6 @@ public class PlayField extends JComponent {
             return;
         }
 
-        player.move(dx, dy);
         fields.get(x).set(y, new Field(x, y));
         fields.get(x + dx).set(y + dy, player);
     }
@@ -137,6 +137,8 @@ public class PlayField extends JComponent {
 
         for (ArrayList<Field> row : fields) {
             for (Field field : row) {
+                if (field instanceof Player) continue;
+
                 field.paint(g);
             }
         }

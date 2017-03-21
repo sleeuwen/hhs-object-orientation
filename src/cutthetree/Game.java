@@ -6,10 +6,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -92,7 +89,6 @@ public class Game extends JComponent {
                         playField.dispatchEvent(e);
                     }
 
-                    repaint();
                     return;
                 }
 
@@ -124,8 +120,6 @@ public class Game extends JComponent {
                         if (selected < choices.length - 1) selected++;
                         break;
                 }
-
-                repaint();
             }
         });
 
@@ -135,12 +129,10 @@ public class Game extends JComponent {
                 int x = e.getX();
                 int y = e.getY();
 
-
-                if(paused){
+                if (paused) {
                     if (x > 168 && x < 208 && y > 594 && y < 636) sound = !sound;
                     if (x > 213 && x < 253 && y > 594 && y < 636) fx = !fx;
-                }else
-                {
+                } else {
                     if (x > 240 && x < 280 && y > 640 && y < 680) {
                         sound = !sound;
 
@@ -151,20 +143,27 @@ public class Game extends JComponent {
                         }
                     }
                     if (x > 285 && x < 325 && y > 640 && y < 680) fx = !fx;
-
                 }
-                repaint();
             }
         });
 
         loadFont();
         loadImages();
         Game.loadSound("opening.wav");
+
+        // Start game loop.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                gameLoop();
+            }
+        }).start();
     }
 
     public static void setCurrentLevel(int level){
         currentLevel = level;
     }
+
     private void loadFont() {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
@@ -195,9 +194,25 @@ public class Game extends JComponent {
             imageNoSound = ImageIO.read(getClass().getResource("/img/noSound.png"));
             imageFx = ImageIO.read(getClass().getResource("/img/fx.png"));
             imageNoFx = ImageIO.read(getClass().getResource("/img/noFx.png"));
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void gameLoop() {
+        int fps = 1000 / 12;
+
+        while (true) {
+            try {
+                long start = System.nanoTime();
+                repaint();
+                long diff = System.nanoTime() - start;
+
+                // Sleep to accomplish wanted fps
+                Thread.sleep(Math.max(0, fps - diff / 1_000_000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

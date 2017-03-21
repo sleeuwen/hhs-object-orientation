@@ -7,6 +7,10 @@ import java.io.IOException;
 public class Player extends Field {
     private static Image image;
 
+    private int animX;
+    private int animY;
+    private int animState = 2;
+
     private Lumberaxe axe;
     private String message = "";
 
@@ -26,9 +30,17 @@ public class Player extends Field {
         }
     }
 
-    public void move(int dx, int dy) {
+    public boolean move(int dx, int dy) {
+        // Disallow move while animating
+        if (animX + animY != 0) return false;
+
+        animX = dx;
+        animY = dy;
+
         xPos += dx;
         yPos += dy;
+
+        return true;
     }
 
     public void changeDirection(Direction direction) {
@@ -57,12 +69,31 @@ public class Player extends Field {
 
         int x = xPos * SIZE;
         int y = yPos * SIZE;
-        int offset = direction.ordinal() * SIZE;
+        int offsetX = 150;
+        int offsetY = direction.ordinal() * SIZE;
+
+        // Calculate current animation positions
+        if (animX + animY != 0) {
+            if (animState == 2) {
+                animState = 0;
+            } else {
+                animState++;
+            }
+
+            x += animX * ((SIZE / 3) * (animState + 1)) + (SIZE * -animX);
+            y += animY * ((SIZE / 3) * (animState + 1)) + (SIZE * -animY);
+
+            offsetX = animState * SIZE;
+            if (animState == 2) {
+                animX = 0;
+                animY = 0;
+            }
+        }
 
         g.drawImage(
                 image, // Source image,
                 x, y, x + SIZE, y + SIZE, // Destination position
-                150, offset, 225, offset + SIZE, // Source position
+                offsetX, offsetY, offsetX + SIZE, offsetY + SIZE, // Source position
                 null
         );
 
