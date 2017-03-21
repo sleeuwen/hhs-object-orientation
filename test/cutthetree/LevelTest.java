@@ -33,6 +33,20 @@ public class LevelTest {
     }
 
     @Test
+    public void generateTutorialLevel() throws Exception {
+        ArrayList<ArrayList<Field>> fields = Level.generateLevel(LevelType.TUTORIAL, 12, 12, 0);
+
+        assertNotNull(fields);
+    }
+
+    @Test
+    public void generateLevel() throws Exception {
+        ArrayList<ArrayList<Field>> fields = Level.generateLevel(LevelType.EASY, 12, 12, 0);
+
+        assertNotNull(fields);
+    }
+
+    @Test
     public void loadLevelSimple() throws Exception {
         InputStream is = new ByteArrayInputStream(LEVEL.getBytes());
         ArrayList<ArrayList<Field>> fields = (ArrayList<ArrayList<Field>>) loadLevel.invoke(null, is);
