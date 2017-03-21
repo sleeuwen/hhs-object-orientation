@@ -21,7 +21,6 @@ public class PlayField extends JComponent {
     private Player player;
 
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
-    private ArrayList<Field> animated = new ArrayList<>();
 
     public PlayField(int height, int width, LevelType type, int levelNumber) {
         this.height = height;
@@ -57,8 +56,6 @@ public class PlayField extends JComponent {
                             break;
                     }
                 }
-
-//                repaint();
             }
         });
 
@@ -98,8 +95,9 @@ public class PlayField extends JComponent {
         if (!(fields.get(x + dx).get(y + dy) instanceof Tree)) return;
 
         Tree tree = (Tree) fields.get(x + dx).get(y + dy);
+        if (!tree.isSolid()) return;
+
         if (tree.cut(player.getAxe())) {
-            fields.get(x + dx).set(y + dy, new Field(x + dx, y + dy));
             Game.loadSound("chopping.wav");
         } else {
             player.say("I need a " + tree.getColor() + " axe to cut this tree");

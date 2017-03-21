@@ -89,7 +89,6 @@ public class Game extends JComponent {
                         playField.dispatchEvent(e);
                     }
 
-//                    repaint();
                     return;
                 }
 
@@ -121,8 +120,6 @@ public class Game extends JComponent {
                         if (selected < choices.length - 1) selected++;
                         break;
                 }
-
-//                repaint();
             }
         });
 
@@ -147,8 +144,6 @@ public class Game extends JComponent {
                     }
                     if (x > 285 && x < 325 && y > 640 && y < 680) fx = !fx;
                 }
-
-//                repaint();
             }
         });
 
@@ -199,7 +194,6 @@ public class Game extends JComponent {
             imageNoSound = ImageIO.read(getClass().getResource("/img/noSound.png"));
             imageFx = ImageIO.read(getClass().getResource("/img/fx.png"));
             imageNoFx = ImageIO.read(getClass().getResource("/img/noFx.png"));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
