@@ -150,8 +150,8 @@ public class Game extends JComponent {
         loadFont();
         loadImages();
         Game.loadSound("opening.wav");
-        clip.stop();
 
+        // Start game loop.
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -208,9 +208,7 @@ public class Game extends JComponent {
                 repaint();
                 long diff = System.nanoTime() - start;
 
-                if (fps - diff / 1_000_000 < 0) {
-                    System.out.println("OMG NO TO SLOW");
-                }
+                // Sleep to accomplish wanted fps
                 Thread.sleep(Math.max(0, fps - diff / 1_000_000));
             } catch (InterruptedException e) {
                 e.printStackTrace();

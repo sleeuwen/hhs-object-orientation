@@ -31,6 +31,7 @@ public class Player extends Field {
     }
 
     public boolean move(int dx, int dy) {
+        // Disallow move while animating
         if (animX + animY != 0) return false;
 
         animX = dx;
@@ -71,6 +72,7 @@ public class Player extends Field {
         int offsetX = 150;
         int offsetY = direction.ordinal() * SIZE;
 
+        // Calculate current animation positions
         if (animX + animY != 0) {
             if (animState == 2) {
                 animState = 0;

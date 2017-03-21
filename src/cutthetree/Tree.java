@@ -37,7 +37,7 @@ public class Tree extends Field {
 
     public boolean cut(Lumberaxe axe) {
         if (axe != null && color == axe.getColor()) {
-            animState = 0;
+            animState = 0; // Start animation.
 
             return true;
         }
@@ -54,6 +54,7 @@ public class Tree extends Field {
         int y = yPos * SIZE;
         int offset = color.ordinal() * SIZE;
 
+        // Calculate current animation image offset
         if (animState >= 0) {
             offset = animState * SIZE;
 
