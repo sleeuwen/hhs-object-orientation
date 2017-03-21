@@ -24,7 +24,7 @@ public class Player extends Field {
 
     private static void loadImage() {
         try {
-            image = ImageIO.read(Player.class.getResource("/img/playerSprite.png"));
+            image = ImageIO.read(Player.class.getResource("/img/ashSprite.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
