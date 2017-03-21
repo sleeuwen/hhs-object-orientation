@@ -12,7 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
 
 /**
@@ -177,11 +177,10 @@ public class Game extends JComponent {
         try {
             if((sound && Arrays.asList(sounds).contains(filename.split("\\.")[0])) || (fx && Arrays.asList(effects).contains(filename.split("\\.")[0]))){
                 clip = AudioSystem.getClip();
-                clip.open(AudioSystem.getAudioInputStream(new File(Game.class.getResource("/sound/" + filename).getFile())));
+                clip.open(AudioSystem.getAudioInputStream(Game.class.getResource("/sound/" + filename)));
                 clip.start();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
