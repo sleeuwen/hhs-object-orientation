@@ -6,10 +6,11 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Arrays;
 
 /**
@@ -44,10 +45,10 @@ public class Game extends JComponent {
 
 
     private static String[] sounds = new String[]{
-        "opening","winning"
+            "opening", "winning"
     };
     private static String[] effects = new String[]{
-            "chopping","grab"
+            "chopping", "grab"
     };
     private String[] choices = new String[]{
             "Start", "Difficulty", "Exit"
@@ -68,44 +69,25 @@ public class Game extends JComponent {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (!playScreen && !finished) {
-                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        paused = !paused;
-                    } else if (paused) {
-                        switch (e.getKeyCode()) {
-                            case KeyEvent.VK_UP:
-                                if (selected > 0) selected--;
-                                break;
-                            case KeyEvent.VK_DOWN:
-                                if (selected < choices.length - 1) selected++;
-                                break;
-                            case KeyEvent.VK_ENTER:
-                                if (selected == 1) {
-                                    playField = new PlayField(12, 12, LevelType.values()[difficulty], currentLevel);
-                                } else if (selected == 2) {
-                                    playScreen = true;
-                                    Game.loadSound("opening.wav");
-                                }
-
-                                selected = 0;
-                                paused = false;
-                                break;
-
-                        }
-                    } else {
-                        playField.dispatchEvent(e);
-                    }
-
-                    return;
-                } else if (!playScreen && finished) {
+                if (playScreen) {
+                    playScreenKeyHandler(e);
+                } else if (finished) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         playScreen = true;
                         finished = false;
                     }
-
-                    return;
+                } else {
+                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                        paused = !paused;
+                    } else if (paused) {
+                        pausedKeyHandler(e);
+                    } else {
+                        playField.dispatchEvent(e);
+                    }
                 }
+            }
 
+            private void playScreenKeyHandler(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ENTER:
                         if (!selectLevel) {
@@ -133,6 +115,29 @@ public class Game extends JComponent {
                         String[] choices = selectLevel ? levels : Game.this.choices;
                         if (selected < choices.length - 1) selected++;
                         break;
+                }
+            }
+
+            private void pausedKeyHandler(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        if (selected > 0) selected--;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        if (selected < choices.length - 1) selected++;
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        if (selected == 1) {
+                            playField = new PlayField(12, 12, LevelType.values()[difficulty], currentLevel);
+                        } else if (selected == 2) {
+                            playScreen = true;
+                            Game.loadSound("opening.wav");
+                        }
+
+                        selected = 0;
+                        paused = false;
+                        break;
+
                 }
             }
         });
@@ -174,10 +179,6 @@ public class Game extends JComponent {
         }).start();
     }
 
-    public static void setCurrentLevel(int level){
-        currentLevel = level;
-    }
-
     private void loadFont() {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
@@ -188,7 +189,7 @@ public class Game extends JComponent {
 
     public static void loadSound(String filename) {
         try {
-            if((sound && Arrays.asList(sounds).contains(filename.split("\\.")[0])) || (fx && Arrays.asList(effects).contains(filename.split("\\.")[0]))){
+            if ((sound && Arrays.asList(sounds).contains(filename.split("\\.")[0])) || (fx && Arrays.asList(effects).contains(filename.split("\\.")[0]))) {
                 clip = AudioSystem.getClip();
                 clip.open(AudioSystem.getAudioInputStream(Game.class.getResource("/sound/" + filename)));
                 clip.start();
@@ -211,6 +212,14 @@ public class Game extends JComponent {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setCurrentLevel(int level) {
+        currentLevel = level;
+    }
+
+    public static void setFinished() {
+        finished = true;
     }
 
     private void gameLoop() {
@@ -271,7 +280,7 @@ public class Game extends JComponent {
                     g.setFont(font);
                     g.setColor(i == selected ? Color.RED : Color.WHITE);
 
-                    drawCentered(g, finishMenu[i], 420 + (i*32));
+                    drawCentered(g, finishMenu[i], 420 + (i * 32));
                 }
             }
         }
@@ -280,9 +289,5 @@ public class Game extends JComponent {
     private void drawCentered(Graphics g, String str, int y) {
         int width = g.getFontMetrics().stringWidth(str);
         g.drawString(str, getWidth() / 2 - width / 2, y);
-    }
-
-    public static void setFinished(boolean b){
-        finished = b;
     }
 }

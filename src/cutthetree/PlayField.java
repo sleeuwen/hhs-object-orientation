@@ -109,7 +109,7 @@ public class PlayField extends JComponent {
 
         if (fields.get(x + dx).get(y + dy) instanceof Finish) {
             Game.loadSound("winning.wav");
-            Game.setFinished(true);
+            Game.setFinished();
             finished = true;
             fields.get(x).set(y, new Field(x, y));
 
