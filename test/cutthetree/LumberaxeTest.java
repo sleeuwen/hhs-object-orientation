@@ -6,15 +6,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by Michael on 21-3-2017.
+ * Created by The Lion Kings on 21-3-2017.
  */
 public class LumberaxeTest {
+    private Lumberaxe lumberaxe1;
 
-    Lumberaxe lumberaxe1;
     @Before
     public void setUp() throws Exception {
-        lumberaxe1 = new Lumberaxe(0,0,Color.RED);
-
+        lumberaxe1 = new Lumberaxe(0, 0, Color.RED);
     }
 
     @Test
@@ -26,6 +25,4 @@ public class LumberaxeTest {
     public void getColorNegative() throws Exception {
         assertFalse(lumberaxe1.getColor() == Color.BLACK);
     }
-
-
 }

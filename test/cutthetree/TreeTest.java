@@ -1,8 +1,5 @@
 package cutthetree;
 
-import cutthetree.Color;
-import cutthetree.Lumberaxe;
-import cutthetree.Tree;
 import org.junit.Before;
 import org.junit.Test;
 

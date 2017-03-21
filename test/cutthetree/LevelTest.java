@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class LevelTest {
-    private static final String LEVEL =
-            "WWWWWWWWWWWW\n" +
+    private static final String LEVEL = "WWWWWWWWWWWW\n" +
             "W          W\n" +
             "W123456    W\n" +
             "Wabcdef    W\n" +
@@ -66,7 +65,7 @@ public class LevelTest {
         ArrayList<ArrayList<Field>> fields = (ArrayList<ArrayList<Field>>) loadLevel.invoke(null, is);
 
         for (int i = 1; i <= 6; i++) {
-            assertTrue((char)('a' + i - 1) + " is a Tree object", fields.get(i).get(3) instanceof Tree);
+            assertTrue((char) ('a' + i - 1) + " is a Tree object", fields.get(i).get(3) instanceof Tree);
         }
 
         assertTrue("a is color RED", Color.RED == ((Tree) fields.get(1).get(3)).getColor());
