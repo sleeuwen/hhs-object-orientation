@@ -1,7 +1,9 @@
 package cutthetree;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,21 +15,27 @@ public class Level {
     static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int height, int width, int levelNumber) {
         URL resource;
         Random random = new Random();
-        int number = random.nextInt(1) + 1;
+
+        int number = levelNumber > 0 ? levelNumber : random.nextInt(1) + 1;
         if (type != LevelType.TUTORIAL) {
-            Game.setCurrentLevel(levelNumber == 0? number:levelNumber);
-            resource = Level.class.getResource("/level/" + type.toString().toLowerCase().substring(0, 1) + (levelNumber == 0? number : levelNumber) + ".txt");
-        }else {
+            Game.setCurrentLevel(number);
+            resource = Level.class.getResource("/level/" + type.toString().toLowerCase().substring(0, 1) + number + ".txt");
+        } else {
             resource = Level.class.getResource("/level/" + type.toString().toLowerCase() + ".txt");
         }
+
         if (resource != null) {
-            return loadLevel(resource.getFile());
+            try {
+                return loadLevel(resource.openStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             throw new UnsupportedOperationException("Levels of type " + type.toString().toLowerCase() + " are not yet supported.");
         }
     }
 
-    private static ArrayList<ArrayList<Field>> loadLevel(String file) {
+    private static ArrayList<ArrayList<Field>> loadLevel(InputStream input) {
         // Load a level from a given file path following the given spec:
         // W: Wall
         // F: Finish
@@ -38,7 +46,7 @@ public class Level {
         ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
         try {
-            BufferedReader in = new BufferedReader(new FileReader(file));
+            BufferedReader in = new BufferedReader(new InputStreamReader(input));
 
             String line;
             int y = 0;
