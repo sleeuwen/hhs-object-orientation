@@ -22,11 +22,11 @@ public class PlayField extends JComponent {
 
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
-    public PlayField(int height, int width) {
+    public PlayField(int height, int width, LevelType type, int levelNumber) {
         this.height = height;
         this.width = width;
 
-        fields = Level.generateLevel(LevelType.TUTORIAL, height, width);
+        fields = Level.generateLevel(type, height, width, levelNumber);
 
         player = new Player(1, 1);
         fields.get(1).set(1, player);

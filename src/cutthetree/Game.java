@@ -38,6 +38,8 @@ public class Game extends JComponent {
     private Image imageFx;
     private Image imageNoFx;
 
+    private static int currentLevel;
+
     private static boolean sound = true, fx = true;
 
 
@@ -75,7 +77,7 @@ public class Game extends JComponent {
                                 break;
                             case KeyEvent.VK_ENTER:
                                 if (selected == 1) {
-                                    playField = new PlayField(12, 12);
+                                    playField = new PlayField(12, 12,LevelType.values()[difficulty],currentLevel);
                                 } else if (selected == 2) {
                                     playScreen = true;
                                     Game.loadSound("opening.wav");
@@ -98,7 +100,7 @@ public class Game extends JComponent {
                     case KeyEvent.VK_ENTER:
                         if (!selectLevel) {
                             if (selected == 0) {
-                                playField = new PlayField(12, 12);
+                                playField = new PlayField(12, 12,LevelType.values()[difficulty],0);
                                 playScreen = false;
                                 clip.stop();
                             } else if (selected == 1) {
@@ -160,6 +162,9 @@ public class Game extends JComponent {
         Game.loadSound("opening.wav");
     }
 
+    public static void setCurrentLevel(int level){
+        currentLevel = level;
+    }
     private void loadFont() {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);

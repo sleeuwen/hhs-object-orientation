@@ -4,22 +4,26 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by The lion kings on 17-3-2017.
  */
 public class Level {
-    static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int height, int width) {
-        if (type == LevelType.RANDOM) {
-            throw new UnsupportedOperationException("Levels of type random are not yet supported.");
+    static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int height, int width, int levelNumber) {
+        URL resource;
+        Random random = new Random();
+        int number = random.nextInt(1) + 1;
+        if (type != LevelType.TUTORIAL) {
+            Game.setCurrentLevel(levelNumber == 0? number:levelNumber);
+            resource = Level.class.getResource("/level/" + type.toString().toLowerCase().substring(0, 1) + (levelNumber == 0? number : levelNumber) + ".txt");
+        }else {
+            resource = Level.class.getResource("/level/" + type.toString().toLowerCase() + ".txt");
+        }
+        if (resource != null) {
+            return loadLevel(resource.getFile());
         } else {
-            URL resource = Level.class.getResource("/level/" + type.toString().toLowerCase() + ".txt");
-
-            if (resource != null) {
-                return loadLevel(resource.getFile());
-            } else {
-                throw new UnsupportedOperationException("Levels of type " + type.toString().toLowerCase() + " are not yet supported.");
-            }
+            throw new UnsupportedOperationException("Levels of type " + type.toString().toLowerCase() + " are not yet supported.");
         }
     }
 
