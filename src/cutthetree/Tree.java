@@ -35,6 +35,10 @@ public class Tree extends Field {
         return this.color;
     }
 
+    public boolean isBeingCut() {
+        return animState >= 0;
+    }
+
     public boolean cut(Lumberaxe axe) {
         if (axe != null && color == axe.getColor()) {
             animState = 0; // Start animation.

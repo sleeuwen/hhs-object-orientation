@@ -80,7 +80,7 @@ public class PlayField extends JComponent {
         if (!(fields.get(x).get(y) instanceof Tree)) return;
 
         Tree tree = (Tree) fields.get(x).get(y);
-        if (!tree.isSolid()) return;
+        if (!tree.isSolid() || tree.isBeingCut()) return;
 
         if (tree.cut(player.getAxe())) {
             Game.loadSound("chopping.wav");
