@@ -1,8 +1,13 @@
+package cutthetree;
+
 import cutthetree.Color;
 import cutthetree.Lumberaxe;
 import cutthetree.Tree;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static org.junit.Assert.*;
 
@@ -54,5 +59,23 @@ public class TreeTest {
     @Test
     public void equalsNegative() throws Exception {
         assertNotEquals(testTree1, testTree3);
+    }
+
+    @Test
+    public void treeIsSolid() throws Exception {
+        assertTrue(testTree1.isSolid());
+    }
+
+    @Test
+    public void treeIsNotSolidAfterAnimation() throws Exception {
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = image.getGraphics();
+
+        testTree1.cut(goodAxe);
+
+        // Animation takes 4 frames.
+        for (int i = 0; i < 4; i++) testTree1.paint(g);
+
+        assertFalse(testTree1.isSolid());
     }
 }
