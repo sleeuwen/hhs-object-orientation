@@ -17,15 +17,11 @@ import java.util.Arrays;
  * Created by The lion kings on 20-3-2017.
  */
 public class Game extends JComponent {
-    private boolean playScreen = true;
     private Image imageBackground;
     private Font font;
     private PlayField playField;
 
-    private boolean paused = false;
-
     private int selected = 0;
-    private boolean selectLevel;
     private int difficulty = 0;
     private static Clip clip;
     private Image imageField;
@@ -37,12 +33,11 @@ public class Game extends JComponent {
     private Image imageNoFx;
     private int finishSelected = 0;
 
-    private static boolean finished = false;
-
     private static int currentLevel;
 
     private static boolean sound = true, fx = true;
 
+    private static GameState state = GameState.START;
 
     private static String[] sounds = new String[]{
             "opening", "winning"
@@ -69,17 +64,20 @@ public class Game extends JComponent {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (playScreen) {
+                if (state == GameState.START || state == GameState.LEVEL_SELECT) {
                     playScreenKeyHandler(e);
-                } else if (finished) {
+                } else if (state == GameState.FINISHED) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        playScreen = true;
-                        finished = false;
+                        state = GameState.START;
                     }
                 } else {
                     if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        paused = !paused;
-                    } else if (paused) {
+                        if (state == GameState.PAUSED) {
+                            state = GameState.PLAYING;
+                        } else {
+                            state = GameState.PAUSED;
+                        }
+                    } else if (state == GameState.PAUSED) {
                         pausedKeyHandler(e);
                     } else {
                         playField.dispatchEvent(e);
@@ -90,20 +88,20 @@ public class Game extends JComponent {
             private void playScreenKeyHandler(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ENTER:
-                        if (!selectLevel) {
+                        if (state == GameState.START) {
                             if (selected == 0) {
                                 playField = new PlayField(12, 12, LevelType.values()[difficulty], 0);
-                                playScreen = false;
+                                state = GameState.PLAYING;
                                 clip.stop();
                             } else if (selected == 1) {
-                                selectLevel = true;
+                                state = GameState.LEVEL_SELECT;
                             } else if (selected == 2) {
                                 System.exit(0);
                             }
                         } else {
                             if (selected < levels.length - 1) difficulty = selected;
 
-                            selectLevel = false;
+                            state = GameState.START;
                         }
 
                         selected = 0;
@@ -112,7 +110,7 @@ public class Game extends JComponent {
                         if (selected > 0) selected--;
                         break;
                     case KeyEvent.VK_DOWN:
-                        String[] choices = selectLevel ? levels : Game.this.choices;
+                        String[] choices = state == GameState.LEVEL_SELECT ? levels : Game.this.choices;
                         if (selected < choices.length - 1) selected++;
                         break;
                 }
@@ -130,12 +128,14 @@ public class Game extends JComponent {
                         if (selected == 1) {
                             playField = new PlayField(12, 12, LevelType.values()[difficulty], currentLevel);
                         } else if (selected == 2) {
-                            playScreen = true;
+                            state = GameState.START;
+                            selected = 0;
                             Game.loadSound("opening.wav");
+                            return;
                         }
 
                         selected = 0;
-                        paused = false;
+                        state = GameState.PLAYING;
                         break;
 
                 }
@@ -148,7 +148,7 @@ public class Game extends JComponent {
                 int x = e.getX();
                 int y = e.getY();
 
-                if (paused) {
+                if (state == GameState.PAUSED) {
                     if (x > 168 && x < 208 && y > 594 && y < 636) sound = !sound;
                     if (x > 213 && x < 253 && y > 594 && y < 636) fx = !fx;
                 } else {
@@ -219,7 +219,7 @@ public class Game extends JComponent {
     }
 
     public static void setFinished() {
-        finished = true;
+        state = GameState.FINISHED;
     }
 
     private void gameLoop() {
@@ -241,7 +241,7 @@ public class Game extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (playScreen) {
+        if (state == GameState.START || state == GameState.LEVEL_SELECT) {
             g.setColor(Color.BLACK);
             g.setFont(font);
             g.drawImage(imageBackground, 0, 0, null);
@@ -253,7 +253,7 @@ public class Game extends JComponent {
             g.drawImage(fx ? imageFx : imageNoFx, 285, 640, null);
 
             g.setColor(Color.WHITE);
-            String[] choices = selectLevel ? levels : this.choices;
+            String[] choices = state == GameState.LEVEL_SELECT ? levels : this.choices;
             for (int i = 0; i < choices.length; i++) {
                 g.setColor(i == selected ? Color.RED : Color.WHITE);
 
@@ -262,7 +262,7 @@ public class Game extends JComponent {
         } else {
             playField.paintComponent(g);
 
-            if (paused) {
+            if (state == GameState.PAUSED) {
                 g.drawImage(imagePaused, 0, 0, null);
                 g.setFont(font);
                 g.drawImage(sound ? imageSound : imageNoSound, 168, 594, null);
@@ -275,7 +275,7 @@ public class Game extends JComponent {
                 }
             }
 
-            if (finished) {
+            if (state == GameState.FINISHED) {
                 for (int i = 0; i < finishMenu.length; i++) {
                     g.setFont(font);
                     g.setColor(i == selected ? Color.RED : Color.WHITE);
