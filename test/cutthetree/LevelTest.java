@@ -83,10 +83,10 @@ public class LevelTest {
         }
 
         assertTrue("a is color RED", Color.RED == ((Tree) fields.get(1).get(3)).getColor());
-        assertTrue("a is color PURPLE", Color.PURPLE == ((Tree) fields.get(2).get(3)).getColor());
-        assertTrue("a is color YELLOW", Color.YELLOW == ((Tree) fields.get(3).get(3)).getColor());
-        assertTrue("a is color BLUE", Color.BLUE == ((Tree) fields.get(4).get(3)).getColor());
-        assertTrue("a is color WHITE", Color.WHITE == ((Tree) fields.get(5).get(3)).getColor());
-        assertTrue("a is color BLACK", Color.BLACK == ((Tree) fields.get(6).get(3)).getColor());
+        assertTrue("b is color PURPLE", Color.PURPLE == ((Tree) fields.get(2).get(3)).getColor());
+        assertTrue("c is color YELLOW", Color.YELLOW == ((Tree) fields.get(3).get(3)).getColor());
+        assertTrue("d is color BLUE", Color.BLUE == ((Tree) fields.get(4).get(3)).getColor());
+        assertTrue("e is color WHITE", Color.WHITE == ((Tree) fields.get(5).get(3)).getColor());
+        assertTrue("f is color BLACK", Color.BLACK == ((Tree) fields.get(6).get(3)).getColor());
     }
 }
