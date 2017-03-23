@@ -1,5 +1,8 @@
 package cutthetree;
 
+/**
+ * This represents the current direction of a {@link Player}
+ */
 public enum Direction {
     DOWN(0, 1),
     UP(0, -1),

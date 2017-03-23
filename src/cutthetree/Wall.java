@@ -5,7 +5,8 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * Created by The lion kings on 17-3-2017.
+ * The Wall class represents a non-destroyable tree in
+ * the field.
  */
 public class Wall extends Field {
     private static Image image;
@@ -17,6 +18,9 @@ public class Wall extends Field {
         if (image == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this object on screen
+     */
     private static void loadImage() {
         try {
             image = ImageIO.read(Wall.class.getResource("/img/solidTree.png"));

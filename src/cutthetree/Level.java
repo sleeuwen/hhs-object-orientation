@@ -9,9 +9,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by The lion kings on 17-3-2017.
+ * This class is used for generating new levels for a given level type.
  */
 public class Level {
+    private Level() {
+    }
+
+    /**
+     * Generate a new random level for the given level type
+     */
     static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int height, int width, int levelNumber) {
         URL resource;
         Random random = new Random();
@@ -35,6 +41,9 @@ public class Level {
         }
     }
 
+    /**
+     * Converts an input stream of a level file to a list of Fields
+     */
     private static ArrayList<ArrayList<Field>> loadLevel(InputStream input) {
         // Load a level from a given file path following the given spec:
         // W: Wall

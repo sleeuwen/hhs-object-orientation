@@ -14,7 +14,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by The lion kings on 20-3-2017.
+ * The Game class is responsible for keeping track of
+ * the current state of the game and painting it.
+ *
+ * It is also used to play songs and sound effects, and
+ * disable them when needed.
  */
 public class Game extends JComponent {
     private Image imageBackground;

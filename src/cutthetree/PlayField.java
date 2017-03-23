@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by The lion kings on 17-3-2017.
+ * The PlayField class is responsible for the game itself.
+ *
+ * It will paint the current level and will respond
+ * to key presses for walking or cutting.
  */
 public class PlayField extends JComponent {
     private static Image imageAxe;
@@ -63,6 +66,9 @@ public class PlayField extends JComponent {
         if (imageBackpack == null || imageAxe == null) loadImages();
     }
 
+    /**
+     * Loads the images required to paint the backpack on screen.
+     */
     private static void loadImages() {
         try {
             imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
@@ -73,6 +79,9 @@ public class PlayField extends JComponent {
         }
     }
 
+    /**
+     * Try to cut the tree the player is looking at.
+     */
     private void cut() {
         int x = player.xPos + player.getDirection().getDx();
         int y = player.yPos + player.getDirection().getDy();
@@ -89,6 +98,9 @@ public class PlayField extends JComponent {
         }
     }
 
+    /**
+     * Let the player walk in the given direction.
+     */
     private void walk(Direction direction) {
         player.changeDirection(direction);
 
@@ -126,6 +138,7 @@ public class PlayField extends JComponent {
 
         for (ArrayList<Field> row : fields) {
             for (Field field : row) {
+                // Paint the player last.
                 if (field instanceof Player) continue;
 
                 field.paint(g);
@@ -135,9 +148,11 @@ public class PlayField extends JComponent {
         paintBackpack(g);
         if (!finished) player.paint(g);
         if (finished) g.drawImage(imageFinishScreen, 0, 0, null);
-
     }
 
+    /**
+     * Paint the player's backpack in the upper right corner.
+     */
     private void paintBackpack(Graphics g) {
         int x = (width - 1) * Field.SIZE;
         int y = 0;
