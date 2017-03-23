@@ -2,6 +2,7 @@ package cutthetree;
 
 import org.junit.Before;
 import org.junit.Test;
+import sun.print.DialogOwner;
 
 import static org.junit.Assert.*;
 
@@ -33,6 +34,11 @@ public class PlayerTest {
     }
 
     @Test
+    public void initialDirectionDown() throws Exception {
+        assertEquals(Direction.DOWN, player1.getDirection());
+    }
+
+    @Test
     public void changeDirectionPositive() throws Exception {
         player1.changeDirection(Direction.LEFT);
 
@@ -44,6 +50,11 @@ public class PlayerTest {
         player1.changeDirection(Direction.LEFT);
 
         assertNotEquals(Direction.UP, player1.getDirection());
+    }
+
+    @Test
+    public void initiallyHasNoAxe() throws Exception {
+        assertNull(player1.getAxe());
     }
 
     @Test
