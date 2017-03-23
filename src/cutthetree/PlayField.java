@@ -24,6 +24,7 @@ public class PlayField extends JComponent {
     private int height, width;
     private Player player;
 
+    private boolean walking = false;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
     public PlayField(int height, int width, LevelType type, int levelNumber) {
@@ -38,22 +39,31 @@ public class PlayField extends JComponent {
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
             @Override
+            public void keyReleased(KeyEvent e) {
+                walking = false;
+            }
+
+            @Override
             public void keyPressed(KeyEvent e) {
                 player.say("");
 
                 if (!finished) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_UP:
-                            walk(Direction.UP);
+                            player.changeDirection(Direction.UP);
+                            walking = true;
                             break;
                         case KeyEvent.VK_DOWN:
-                            walk(Direction.DOWN);
+                            player.changeDirection(Direction.DOWN);
+                            walking = true;
                             break;
                         case KeyEvent.VK_LEFT:
-                            walk(Direction.LEFT);
+                            player.changeDirection(Direction.LEFT);
+                            walking = true;
                             break;
                         case KeyEvent.VK_RIGHT:
-                            walk(Direction.RIGHT);
+                            player.changeDirection(Direction.RIGHT);
+                            walking = true;
                             break;
                         case KeyEvent.VK_SPACE:
                             cut();
@@ -134,6 +144,8 @@ public class PlayField extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        if (walking) walk(player.getDirection());
+
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         for (ArrayList<Field> row : fields) {

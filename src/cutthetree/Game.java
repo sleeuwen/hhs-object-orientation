@@ -67,6 +67,11 @@ public class Game extends JComponent {
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
             @Override
+            public void keyReleased(KeyEvent e) {
+                if (state == GameState.PLAYING) playField.dispatchEvent(e);
+            }
+
+            @Override
             public void keyPressed(KeyEvent e) {
                 if (state == GameState.START || state == GameState.LEVEL_SELECT) {
                     playScreenKeyHandler(e);
@@ -227,7 +232,7 @@ public class Game extends JComponent {
     }
 
     private void gameLoop() {
-        int fps = 1000 / 12;
+        int fps = 1000 / 30;
 
         while (true) {
             try {

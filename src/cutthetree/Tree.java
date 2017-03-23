@@ -68,7 +68,7 @@ public class Tree extends Field {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (animState >= 4) return;
+        if (animState >= 16) return;
 
         int x = xPos * SIZE;
         int y = yPos * SIZE;
@@ -76,11 +76,11 @@ public class Tree extends Field {
 
         // Calculate current animation image offset
         if (animState >= 0) {
-            offset = animState * SIZE;
+            offset = (animState / 4) * SIZE;
 
             animState++;
 
-            if (animState == 4) {
+            if (animState == 16) {
                 isSolid = false;
             }
         }
