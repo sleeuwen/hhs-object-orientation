@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class PlayField extends JComponent {
     private static Image imageAxe;
     private static Image imageBackpack;
-    private static Image imageFinishScreen;
 
     private boolean finished = false;
 
@@ -49,6 +48,9 @@ public class PlayField extends JComponent {
 
                 if (!finished) {
                     switch (e.getKeyCode()) {
+                        case KeyEvent.VK_ESCAPE:
+                            Game.changeState(GameState.PAUSED);
+                            break;
                         case KeyEvent.VK_UP:
                             player.changeDirection(Direction.UP);
                             walking = true;
@@ -83,7 +85,6 @@ public class PlayField extends JComponent {
         try {
             imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
             imageAxe = ImageIO.read(PlayField.class.getResource("/img/axes.png"));
-            imageFinishScreen = ImageIO.read(PlayField.class.getResource("/img/finished.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,7 +132,7 @@ public class PlayField extends JComponent {
 
         if (fields.get(x + dx).get(y + dy) instanceof Finish) {
             Game.loadSound("winning.wav");
-            Game.setFinished();
+            Game.changeState(GameState.FINISHED);
             finished = true;
             fields.get(x).set(y, new Field(x, y));
 
@@ -159,7 +160,6 @@ public class PlayField extends JComponent {
 
         paintBackpack(g);
         if (!finished) player.paint(g);
-        if (finished) g.drawImage(imageFinishScreen, 0, 0, null);
     }
 
     /**

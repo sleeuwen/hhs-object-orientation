@@ -8,8 +8,8 @@ import java.awt.*;
  * the correct size.
  */
 public class GameFrame extends JFrame {
-    protected final static int FRAME_HEIGHT = 900;
-    protected final static int FRAME_WIDTH = 900;
+    public final static int FRAME_HEIGHT = 900;
+    public final static int FRAME_WIDTH = 900;
 
     public GameFrame() {
         getContentPane().setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
