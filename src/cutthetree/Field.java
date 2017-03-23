@@ -5,7 +5,8 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * Created by The lion kings on 17-3-2017.
+ * The Field class is an empty field in the {@link PlayField}
+ * and a base class for other custom fields
  */
 public class Field {
     public static final int SIZE = 75;
@@ -22,6 +23,9 @@ public class Field {
         if (grass == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this object on screen
+     */
     private static void loadImage() {
         try {
             grass = ImageIO.read(Field.class.getResource("/img/grass.png"));

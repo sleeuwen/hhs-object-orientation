@@ -5,7 +5,8 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * Created by The lion kings on 17-3-2017.
+ * The Tree class represents a destroyable tree in the game
+ * with a given {@link Color}
  */
 public class Tree extends Field {
     private static Image image;
@@ -22,6 +23,9 @@ public class Tree extends Field {
         if (image == null || animImage == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this object on screen
+     */
     private static void loadImage() {
         try {
             image = ImageIO.read(Tree.class.getResource("/img/colorTree.png"));
@@ -31,14 +35,26 @@ public class Tree extends Field {
         }
     }
 
+    /**
+     * @return The color of this tree.
+     */
     public Color getColor() {
         return this.color;
     }
 
+    /**
+     * @return Whether this tree is currently being cut
+     */
     public boolean isBeingCut() {
         return animState >= 0;
     }
 
+    /**
+     * Try to cut this tree with the given axe.<br/>
+     * This will also start the animation of cutting the tree when possible.
+     *
+     * @return Whether this tree can be cut with the given axe.
+     */
     public boolean cut(Lumberaxe axe) {
         if (axe != null && color == axe.getColor()) {
             animState = 0; // Start animation.

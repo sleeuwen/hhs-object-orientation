@@ -1,7 +1,7 @@
 package cutthetree;
 
 /**
- * Created by The lion kings on 17-3-2017.
+ * This represents the color associated to a {@link Lumberaxe} or {@link Tree}
  */
 public enum Color {
     RED,

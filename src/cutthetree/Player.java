@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * The Player class represents the current player
+ */
 public class Player extends Field {
     private static Image image;
 
@@ -22,6 +25,9 @@ public class Player extends Field {
         if (image == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this object on screen
+     */
     private static void loadImage() {
         try {
             image = ImageIO.read(Player.class.getResource("/img/ashSprite.png"));
