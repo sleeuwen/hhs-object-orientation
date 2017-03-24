@@ -12,7 +12,7 @@ public class Player extends Field {
 
     private int animX;
     private int animY;
-    private int animState = 2;
+    private int animState = 8;
 
     private Lumberaxe axe;
     private String message = "";

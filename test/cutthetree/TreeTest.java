@@ -76,8 +76,12 @@ public class TreeTest {
         // Start cut animation
         testTree1.cut(goodAxe);
 
-        // Animation takes 4 frames
-        for (int i = 0; i < 4; i++) testTree1.paint(g);
+        // Animation takes 16 frames
+        for (int i = 0; i < 16; i++) {
+            assertTrue(testTree1.isSolid());
+
+            testTree1.paint(g);
+        }
 
         // Tree is no longer solid after animation so the player can walk through it
         assertFalse(testTree1.isSolid());
