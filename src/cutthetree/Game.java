@@ -108,7 +108,7 @@ public class Game extends JComponent {
     public void toggleSound() {
         sound = !sound;
 
-        if (sound) {
+        if (state.ordinal() < GameState.PLAYING.ordinal() && sound) {
             clip.start();
         } else {
             clip.stop();
