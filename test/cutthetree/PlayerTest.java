@@ -2,7 +2,6 @@ package cutthetree;
 
 import org.junit.Before;
 import org.junit.Test;
-import sun.print.DialogOwner;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -12,7 +12,7 @@ public class Player extends Field {
 
     private int animX;
     private int animY;
-    private int animState = 2;
+    private int animState = 8;
 
     private Lumberaxe axe;
     private String message = "";
@@ -80,17 +80,17 @@ public class Player extends Field {
 
         // Calculate current animation positions
         if (animX + animY != 0) {
-            if (animState == 2) {
+            if (animState == 8) {
                 animState = 0;
             } else {
                 animState++;
             }
 
-            x += animX * ((SIZE / 3) * (animState + 1)) + (SIZE * -animX);
-            y += animY * ((SIZE / 3) * (animState + 1)) + (SIZE * -animY);
+            x += animX * ((SIZE / 9) * (animState + 1)) + (SIZE * -animX);
+            y += animY * ((SIZE / 9) * (animState + 1)) + (SIZE * -animY);
 
-            offsetX = animState * SIZE;
-            if (animState == 2) {
+            offsetX = (animState / 4) * SIZE;
+            if (animState == 8) {
                 animX = 0;
                 animY = 0;
             }
