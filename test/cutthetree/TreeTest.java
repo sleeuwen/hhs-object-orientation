@@ -41,11 +41,16 @@ public class TreeTest {
     @Test
     public void cutPositive() throws Exception {
         assertTrue(testTree1.cut(goodAxe));
+        assertTrue(testTree1.isBeingCut());
     }
 
     @Test
     public void cutNegative() throws Exception {
+        assertFalse(testTree1.cut(null));
+        assertFalse(testTree1.isBeingCut());
+
         assertFalse(testTree1.cut(wrongAxe));
+        assertFalse(testTree1.isBeingCut());
     }
 
     @Test
@@ -68,11 +73,13 @@ public class TreeTest {
         Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.getGraphics();
 
+        // Start cut animation
         testTree1.cut(goodAxe);
 
-        // Animation takes 4 frames.
+        // Animation takes 4 frames
         for (int i = 0; i < 4; i++) testTree1.paint(g);
 
+        // Tree is no longer solid after animation so the player can walk through it
         assertFalse(testTree1.isSolid());
     }
 }
