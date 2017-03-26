@@ -31,7 +31,7 @@ public class PlayField extends JComponent {
         this.height = height;
         this.width = width;
 
-        fields = Level.generateLevel(type, height, width, levelNumber);
+        fields = Level.generateLevel(type, height, width, 7);
 
         player = new Player(1, 1);
         fields.get(1).set(1, player);
