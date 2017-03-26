@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class PlayField extends JComponent {
     private static Image imageAxe;
     private static Image imageBackpack;
-    private static Image imageFinishScreen;
 
     private boolean finished = false;
 
@@ -47,28 +46,29 @@ public class PlayField extends JComponent {
             public void keyPressed(KeyEvent e) {
                 player.say("");
 
-                if (!finished) {
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_UP:
-                            player.changeDirection(Direction.UP);
-                            walking = true;
-                            break;
-                        case KeyEvent.VK_DOWN:
-                            player.changeDirection(Direction.DOWN);
-                            walking = true;
-                            break;
-                        case KeyEvent.VK_LEFT:
-                            player.changeDirection(Direction.LEFT);
-                            walking = true;
-                            break;
-                        case KeyEvent.VK_RIGHT:
-                            player.changeDirection(Direction.RIGHT);
-                            walking = true;
-                            break;
-                        case KeyEvent.VK_SPACE:
-                            cut();
-                            break;
-                    }
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ESCAPE:
+                        Game.changeState(GameState.PAUSED);
+                        break;
+                    case KeyEvent.VK_UP:
+                        player.changeDirection(Direction.UP);
+                        walking = true;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        player.changeDirection(Direction.DOWN);
+                        walking = true;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        player.changeDirection(Direction.LEFT);
+                        walking = true;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        player.changeDirection(Direction.RIGHT);
+                        walking = true;
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        cut();
+                        break;
                 }
             }
         });
@@ -83,7 +83,6 @@ public class PlayField extends JComponent {
         try {
             imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
             imageAxe = ImageIO.read(PlayField.class.getResource("/img/axes.png"));
-            imageFinishScreen = ImageIO.read(PlayField.class.getResource("/img/finished.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,7 +130,7 @@ public class PlayField extends JComponent {
 
         if (fields.get(x + dx).get(y + dy) instanceof Finish) {
             Game.loadSound("winning.wav");
-            Game.setFinished();
+            Game.changeState(GameState.FINISHED);
             finished = true;
             fields.get(x).set(y, new Field(x, y));
 
@@ -146,8 +145,6 @@ public class PlayField extends JComponent {
     protected void paintComponent(Graphics g) {
         if (walking) walk(player.getDirection());
 
-        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
         for (ArrayList<Field> row : fields) {
             for (Field field : row) {
                 // Paint the player last.
@@ -159,7 +156,6 @@ public class PlayField extends JComponent {
 
         paintBackpack(g);
         if (!finished) player.paint(g);
-        if (finished) g.drawImage(imageFinishScreen, 0, 0, null);
     }
 
     /**
