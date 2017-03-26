@@ -68,7 +68,7 @@ public abstract class Menu extends JComponent {
         }
     }
 
-    protected void enableSoundToggler(int x, int y) {
+    protected void enableSoundToggler(final int x, final int y) {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -63,7 +63,7 @@ public class Level {
                 if (line.trim().isEmpty()) break;
 
                 for (int x = 0; x < line.length(); x++) {
-                    if (fields.size() <= x) fields.add(new ArrayList<>());
+                    if (fields.size() <= x) fields.add(new ArrayList<Field>());
 
                     char chr = line.charAt(x);
                     if (chr == 'W') {
