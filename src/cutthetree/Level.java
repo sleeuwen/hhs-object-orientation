@@ -12,6 +12,8 @@ import java.util.Random;
  * This class is used for generating new levels for a given level type.
  */
 public class Level {
+    private static final int NUM_LEVELS = 8;
+
     private Level() {
     }
 
@@ -22,7 +24,7 @@ public class Level {
         URL resource;
         Random random = new Random();
 
-        int number = levelNumber > 0 ? levelNumber : random.nextInt(5) + 1;
+        int number = levelNumber > 0 ? levelNumber : random.nextInt(NUM_LEVELS) + 1;
         if (type != LevelType.TUTORIAL) {
             Game.setCurrentLevel(number);
             resource = Level.class.getResource("/level/" + type.toString().toLowerCase().substring(0, 1) + number + ".txt");
