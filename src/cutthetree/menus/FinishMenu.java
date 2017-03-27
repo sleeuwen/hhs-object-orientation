@@ -27,6 +27,7 @@ public class FinishMenu extends Menu {
     @Override
     void itemSelected(int index) {
         Game.changeState(GameState.START);
+        Game.stopSound();
         Game.loadSound("opening.wav");
     }
 
