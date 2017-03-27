@@ -5,7 +5,7 @@ import cutthetree.GameState;
 
 public class LevelSelectMenu extends StartMenu {
     public LevelSelectMenu(Game game) {
-        super(game, "Tutorial", "Easy", "Medium", "Hard","Back");
+        super(game, "Tutorial", "Easy", "Medium", "Hard");
     }
 
     @Override

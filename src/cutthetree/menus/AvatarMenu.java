@@ -17,7 +17,7 @@ public class AvatarMenu extends Menu{
     private static Image title;
 
     public AvatarMenu(Game game) {
-        super(game, "Woody","Ash","Henk");
+        super(game, "Woody","Ash","Beast");
         if(background == null)loadImage();
     }
     private static void loadImage() {

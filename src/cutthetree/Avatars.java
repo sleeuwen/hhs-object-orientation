@@ -6,6 +6,6 @@ package cutthetree;
 public enum Avatars {
     WOODY,
     ASH,
-    HENK
+    BEAST
 
 }
