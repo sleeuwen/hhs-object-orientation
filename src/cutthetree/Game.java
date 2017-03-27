@@ -28,6 +28,7 @@ public class Game extends JComponent {
     private int difficulty = 0;
     private static Clip clip;
     private static int currentLevel;
+    private static Avatars avatar = Avatars.WOODY;
 
     private static boolean sound = true, fx = true;
 
@@ -71,6 +72,7 @@ public class Game extends JComponent {
 
         menus.put(GameState.START, new StartMenu(this));
         menus.put(GameState.LEVEL_SELECT, new LevelSelectMenu(this));
+        menus.put(GameState.AVATAR, new AvatarMenu(this));
         menus.put(GameState.PAUSED, new PauseMenu(this));
         menus.put(GameState.FINISHED, new FinishMenu(this));
 
@@ -170,5 +172,13 @@ public class Game extends JComponent {
         if (menus.containsKey(state)) {
             menus.get(state).paintComponent(g);
         }
+    }
+
+    public static void setAvatar(Avatars chr) {
+        avatar = chr;
+    }
+
+    public static Avatars getAvatar(){
+        return avatar;
     }
 }

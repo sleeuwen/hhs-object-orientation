@@ -8,7 +8,7 @@ import java.io.IOException;
  * The Player class represents the current player
  */
 public class Player extends Field {
-    private static Image image;
+    private Image image;
 
     private int animX;
     private int animY;
@@ -28,9 +28,10 @@ public class Player extends Field {
     /**
      * Loads the images required to paint this object on screen
      */
-    private static void loadImage() {
+    private void loadImage() {
         try {
-            image = ImageIO.read(Player.class.getResource("/img/ashSprite.png"));
+            Avatars avatar = Game.getAvatar();
+            image = ImageIO.read(Player.class.getResource("/img/"+ avatar.toString().toLowerCase() +"Sprite.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
