@@ -57,5 +57,6 @@ public class StartMenu extends Menu {
 
         paintSoundToggles(g, 240, 640);
         paintChoices(g);
+        paintVersion(g);
     }
 }
