@@ -15,7 +15,7 @@ public abstract class Menu extends JComponent {
     protected static Image imageSound, imageNoSound;
     protected static Image imageFx, imageNoFx;
     protected static Font font;
-    protected static Font font2;
+    protected static Font fontSmall;
 
     protected final String[] choices;
     protected int selected = 0;
@@ -50,7 +50,7 @@ public abstract class Menu extends JComponent {
     private static void loadFont() {
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
-            font2 = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(12f);
+            fontSmall = font.deriveFont(12f);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,12 +101,11 @@ public abstract class Menu extends JComponent {
 
             drawCentered(g, choices[i], 420 + (i * 32));
         }
-
     }
 
     protected void paintVersion(Graphics g) {
-        g.setFont(font2);
-
+        g.setColor(Color.WHITE);
+        g.setFont(fontSmall);
         g.drawString("Version: 0.2b",0,900);
     }
 

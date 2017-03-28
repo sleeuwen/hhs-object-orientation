@@ -10,25 +10,28 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Donald Trump on 27-3-2017.
+ * Created by The lion kings on 27-3-2017.
  */
 public class AvatarMenu extends Menu{
     private static Image background;
     private static Image menuField;
     private static Image title;
     private static Image[] avatars = new Image[3];
-    private long start = System.currentTimeMillis();
-    private long diff;
+    private static Font avatarFont;
 
-    protected int selected = 0;
-    protected int walk = 2;
-    private Font avatarFont;
+    private long start = System.currentTimeMillis();
+    private int selected = 0;
+    private int walk = 2;
 
     public AvatarMenu(Game game) {
-        super(game, "Woody","Ash","Peeta");
-        if(background == null)loadImage();
+        super(game, "Woody", "Ash", "Peeta");
+
+        enableSoundToggler(240, 640);
+        if (background == null) loadImages();
+        if (avatarFont == null) loadFont();
     }
-    private static void loadImage() {
+
+    private static void loadImages() {
         try {
             background = ImageIO.read(StartMenu.class.getResource("/img/menuBackground.png"));
             menuField = ImageIO.read(StartMenu.class.getResource("/img/menuField.png"));
@@ -36,6 +39,14 @@ public class AvatarMenu extends Menu{
             avatars[0] = ImageIO.read(StartMenu.class.getResource("/img/woodyWalkingSprite.png"));
             avatars[1] = ImageIO.read(StartMenu.class.getResource("/img/ashWalkingSprite.png"));
             avatars[2] = ImageIO.read(StartMenu.class.getResource("/img/peetaWalkingSprite.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadFont() {
+        try {
+            avatarFont = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(20f);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,55 +84,42 @@ public class AvatarMenu extends Menu{
         }
     }
 
+    @Override
+    protected void paintChoices(Graphics g) {
+        g.setFont(avatarFont);
 
-    private void loadFont() {
-        try {
-            avatarFont = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(20f);
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int i = 0; i < choices.length; i++) {
+            g.setColor(i == selected ? Color.RED : Color.WHITE);
+
+            int offset = 0;
+
+            if (i == selected) {
+                long diff = System.currentTimeMillis() - start;
+
+                if (diff > 150) {
+                    start = System.currentTimeMillis();
+
+                    walk = (walk + 1) % 4;
+                }
+
+                offset = walk * 120;
+            }
+
+            g.drawImage(
+                    avatars[i], // Source image
+                    242 + (i * 150), 450, 362 + (i * 150), 570, // Destination position
+                    offset, 0, offset + 120, 120, // Source position
+                    null
+            );
+
+            drawCentered(g, choices[i], i);
         }
     }
 
     @Override
-    protected void paintChoices(Graphics g) {
-        loadFont();
-        g.setFont(avatarFont);
-        //g.drawImage()
-
-        for (int i = 0; i < choices.length; i++) {
-            g.setColor(i == selected ? Color.RED : Color.WHITE);
-            if (i == selected){
-                diff = System.currentTimeMillis() - start;
-
-                if (diff > 150){
-                    start = System.currentTimeMillis();
-                    if (walk != 3) {walk++;}
-                    else if (walk == 3) walk = 0;
-                }
-                g.drawImage(
-                        avatars[i], // Source image,
-                        242 + (i*150), 450, 242+(i*150) + 120, 450 + 120, // Destination position
-                        (walk * 120), 0, 120 + (walk * 120), 120, // Source position
-                        null
-                );
-
-
-            }else{
-                g.drawImage(
-                        avatars[i], // Source image,
-                        242 + (i*150), 450, 242+(i*150) + 120, 450 + 120, // Destination position
-                        0, 0, 120, 120, // Source position
-                        null
-                );
-            }
-
-            drawCentered(g,choices[i],600,i);
-        }
-    }
-
-    protected void drawCentered(Graphics g, String str, int y, int i) {
+    protected void drawCentered(Graphics g, String str, int i) {
         int width = g.getFontMetrics().stringWidth(str);
 
-        g.drawString(str, GameFrame.FRAME_WIDTH / 6 * (i+2) - width / 2, y);
+        g.drawString(str, GameFrame.FRAME_WIDTH / 6 * (i + 2) - width / 2, 600);
     }
 }

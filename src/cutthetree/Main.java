@@ -10,11 +10,13 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         JFrame window = new GameFrame();
+
         try {
             window.setIconImage(ImageIO.read(Main.class.getResource("/img/gameIcon.jpg")));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
     }

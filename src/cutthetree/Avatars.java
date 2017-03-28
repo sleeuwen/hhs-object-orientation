@@ -1,11 +1,10 @@
 package cutthetree;
 
 /**
- * Created by Michael on 27-3-2017.
+ * Created by The lion kings on 27-3-2017.
  */
 public enum Avatars {
     WOODY,
     ASH,
-    PEETA
-
+    PEETA,
 }

@@ -7,6 +7,7 @@ public enum GameState {
     START,
     LEVEL_SELECT,
     AVATAR,
+
     PLAYING,
     PAUSED,
     FINISHED,

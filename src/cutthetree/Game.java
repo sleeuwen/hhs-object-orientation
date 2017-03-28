@@ -135,6 +135,14 @@ public class Game extends JComponent {
         this.difficulty = difficulty;
     }
 
+    public static void setAvatar(Avatars chr) {
+        avatar = chr;
+    }
+
+    public static Avatars getAvatar() {
+        return avatar;
+    }
+
     public void start() {
         playField = new PlayField(12, 12, LevelType.values()[difficulty], 0);
         state = GameState.PLAYING;
@@ -172,13 +180,5 @@ public class Game extends JComponent {
         if (menus.containsKey(state)) {
             menus.get(state).paintComponent(g);
         }
-    }
-
-    public static void setAvatar(Avatars chr) {
-        avatar = chr;
-    }
-
-    public static Avatars getAvatar(){
-        return avatar;
     }
 }
