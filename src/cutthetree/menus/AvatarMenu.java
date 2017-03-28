@@ -33,9 +33,9 @@ public class AvatarMenu extends Menu{
             background = ImageIO.read(StartMenu.class.getResource("/img/menuBackground.png"));
             menuField = ImageIO.read(StartMenu.class.getResource("/img/menuField.png"));
             title = ImageIO.read(StartMenu.class.getResource("/img/menuTitle.png"));
-            avatars[0] = ImageIO.read(StartMenu.class.getResource("/img/woodySprite.png"));
-            avatars[1] = ImageIO.read(StartMenu.class.getResource("/img/ashSprite.png"));
-            avatars[2] = ImageIO.read(StartMenu.class.getResource("/img/peetaSprite.png"));
+            avatars[0] = ImageIO.read(StartMenu.class.getResource("/img/woodyWalkingSprite.png"));
+            avatars[1] = ImageIO.read(StartMenu.class.getResource("/img/ashWalkingSprite.png"));
+            avatars[2] = ImageIO.read(StartMenu.class.getResource("/img/peetaWalkingSprite.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,15 +93,15 @@ public class AvatarMenu extends Menu{
             if (i == selected){
                 diff = System.currentTimeMillis() - start;
 
-                if (diff > 300){
+                if (diff > 150){
                     start = System.currentTimeMillis();
-                    if (walk != 2) {walk++;}
-                    else if (walk == 2) walk = 0;
+                    if (walk != 3) {walk++;}
+                    else if (walk == 3) walk = 0;
                 }
                 g.drawImage(
                         avatars[i], // Source image,
-                        265 + (i*150), 500, 265+(i*150) + 75, 500 + 75, // Destination position
-                        0 + (walk * 75), 0, 75 + (walk * 75), 0 + 75, // Source position
+                        242 + (i*150), 450, 242+(i*150) + 120, 450 + 120, // Destination position
+                        (walk * 120), 0, 120 + (walk * 120), 120, // Source position
                         null
                 );
 
@@ -109,8 +109,8 @@ public class AvatarMenu extends Menu{
             }else{
                 g.drawImage(
                         avatars[i], // Source image,
-                        265 + (i*150), 500, 265+(i*150) + 75, 500 + 75, // Destination position
-                        150, 0, 150 + 75, 0 + 75, // Source position
+                        242 + (i*150), 450, 242+(i*150) + 120, 450 + 120, // Destination position
+                        0, 0, 120, 120, // Source position
                         null
                 );
             }
