@@ -13,7 +13,7 @@ public class StartMenu extends Menu {
     private static Image title;
 
     public StartMenu(Game game) {
-        this(game, "Start", "Difficulty", "Exit");
+        this(game, "Start", "Difficulty", "Avatar", "Exit");
     }
 
     protected StartMenu(Game game, String... choices) {
@@ -40,6 +40,8 @@ public class StartMenu extends Menu {
         } else if (index == 1) {
             Game.changeState(GameState.LEVEL_SELECT);
         } else if (index == 2) {
+            Game.changeState(GameState.AVATAR);
+        } else if (index == 3) {
             System.exit(0);
         }
 
@@ -55,5 +57,6 @@ public class StartMenu extends Menu {
 
         paintSoundToggles(g, 240, 640);
         paintChoices(g);
+        paintVersion(g);
     }
 }
