@@ -144,13 +144,13 @@ public class Game extends JComponent {
     }
 
     public void start() {
-        playField = new PlayField(12, 12, LevelType.values()[difficulty], 0);
+        playField = new PlayField(LevelType.values()[difficulty], 0);
         state = GameState.PLAYING;
         clip.stop();
     }
 
     public void restart() {
-        playField = new PlayField(12, 12, LevelType.values()[difficulty], currentLevel);
+        playField = new PlayField(LevelType.values()[difficulty], currentLevel);
         state = GameState.PLAYING;
     }
 

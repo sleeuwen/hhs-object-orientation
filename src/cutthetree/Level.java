@@ -20,7 +20,7 @@ public class Level {
     /**
      * Generate a new random level for the given level type
      */
-    static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int height, int width, int levelNumber) {
+    static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int levelNumber) {
         URL resource;
         Random random = new Random();
 

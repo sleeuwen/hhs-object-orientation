@@ -20,17 +20,13 @@ public class PlayField extends JComponent {
 
     private boolean finished = false;
 
-    private int height, width;
     private Player player;
 
     private boolean walking = false;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
-    public PlayField(int height, int width, LevelType type, int levelNumber) {
-        this.height = height;
-        this.width = width;
-
-        fields = Level.generateLevel(type, height, width, levelNumber);
+    public PlayField(LevelType type, int levelNumber) {
+        fields = Level.generateLevel(type, levelNumber);
 
         player = new Player(1, 1);
         fields.get(1).set(1, player);
@@ -162,7 +158,7 @@ public class PlayField extends JComponent {
      * Paint the player's backpack in the upper right corner.
      */
     private void paintBackpack(Graphics g) {
-        int x = (width - 1) * Field.SIZE;
+        int x = (fields.size() - 1) * Field.SIZE;
         int y = 0;
 
         g.drawImage(imageBackpack, x, y, null);
