@@ -28,7 +28,7 @@ public class Game extends JComponent {
     private int difficulty = 0;
     private static Clip clip;
     private static int currentLevel;
-    private static Avatars avatar = Avatars.WOODY;
+    private static Avatar avatar = Avatar.WOODY;
 
     private static boolean sound = true, fx = true;
 
@@ -135,11 +135,11 @@ public class Game extends JComponent {
         this.difficulty = difficulty;
     }
 
-    public static void setAvatar(Avatars chr) {
+    public static void setAvatar(Avatar chr) {
         avatar = chr;
     }
 
-    public static Avatars getAvatar() {
+    public static Avatar getAvatar() {
         return avatar;
     }
 

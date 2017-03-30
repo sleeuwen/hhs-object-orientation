@@ -30,7 +30,7 @@ public class Player extends Field {
      */
     private void loadImage() {
         try {
-            Avatars avatar = Game.getAvatar();
+            Avatar avatar = Game.getAvatar();
             image = ImageIO.read(Player.class.getResource("/img/" + avatar.toString().toLowerCase() + "Sprite.png"));
         } catch (IOException e) {
             e.printStackTrace();

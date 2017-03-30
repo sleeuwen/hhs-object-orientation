@@ -1,6 +1,6 @@
 package cutthetree.menus;
 
-import cutthetree.Avatars;
+import cutthetree.Avatar;
 import cutthetree.Game;
 import cutthetree.GameFrame;
 import cutthetree.GameState;
@@ -54,7 +54,7 @@ public class AvatarMenu extends Menu{
 
     @Override
     void itemSelected(int index) {
-        Game.setAvatar(Avatars.values()[index]);
+        Game.setAvatar(Avatar.values()[index]);
         Game.changeState(GameState.START);
     }
 
