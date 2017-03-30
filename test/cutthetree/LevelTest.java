@@ -46,6 +46,11 @@ public class LevelTest {
         assertNotNull(fields);
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void generateInvalidLevel() throws Exception {
+        Level.generateLevel(LevelType.HARD, 99);
+    }
+
     @Test
     public void loadLevelSimple() throws Exception {
         InputStream is = new ByteArrayInputStream(LEVEL.getBytes());
