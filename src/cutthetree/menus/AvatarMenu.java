@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 /**
  * Created by The lion kings on 27-3-2017.
  */
-public class AvatarMenu extends Menu{
+public class AvatarMenu extends Menu {
     private static Image background;
     private static Image menuField;
     private static Image title;

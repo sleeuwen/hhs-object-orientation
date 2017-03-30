@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * The Game class is responsible for keeping track of
  * the current state of the game and painting it.
- *
+ * <p>
  * It is also used to play songs and sound effects, and
  * disable them when needed.
  */
@@ -86,9 +86,11 @@ public class Game extends JComponent {
             }
         }).start();
     }
+
     public static void stopSound() {
         clip.stop();
     }
+
     public static void loadSound(String filename) {
         try {
             if ((sound && Arrays.asList(sounds).contains(filename.split("\\.")[0])) || (fx && Arrays.asList(effects).contains(filename.split("\\.")[0]))) {

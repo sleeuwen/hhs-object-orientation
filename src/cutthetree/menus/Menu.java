@@ -106,7 +106,7 @@ public abstract class Menu extends JComponent {
     protected void paintVersion(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(fontSmall);
-        g.drawString("Version: 0.2b",0,900);
+        g.drawString("Version: 0.2b", 0, 900);
     }
 
     protected void drawCentered(Graphics g, String str, int y) {

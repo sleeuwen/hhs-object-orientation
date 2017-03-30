@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * The PlayField class is responsible for the game itself.
- *
+ * <p>
  * It will paint the current level and will respond
  * to key presses for walking or cutting.
  */
