@@ -5,13 +5,25 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * The Player class represents the current player
+ * The Player class represents the current state of the player
  */
 public class Player extends Field {
+    // This cannot be static as the image might change depending on the set game avatar
     private Image image;
 
+    /**
+     * The current animation on the X axis
+     */
     private int animX;
+
+    /**
+     * The current animation on the Y axis
+     */
     private int animY;
+
+    /**
+     * The current state of the animation
+     */
     private int animState = 8;
 
     private Lumberaxe axe;
@@ -66,6 +78,9 @@ public class Player extends Field {
         return this.axe;
     }
 
+    /**
+     * Let the player say the given message
+     */
     public void say(String text) {
         message = text;
     }

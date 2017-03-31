@@ -13,7 +13,11 @@ import java.util.Random;
  */
 public class Level {
     private static final int NUM_LEVELS = 8;
+    private static final Random random = new Random();
 
+    /**
+     * Disable creating instances of this class as it only exposes a static api
+     */
     private Level() {
     }
 
@@ -22,7 +26,6 @@ public class Level {
      */
     static ArrayList<ArrayList<Field>> generateLevel(LevelType type, int levelNumber) {
         URL resource;
-        Random random = new Random();
 
         int number = levelNumber > 0 ? levelNumber : random.nextInt(NUM_LEVELS) + 1;
         if (type != LevelType.TUTORIAL) {

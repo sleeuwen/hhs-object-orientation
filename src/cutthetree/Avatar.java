@@ -1,7 +1,7 @@
 package cutthetree;
 
 /**
- * Created by The lion kings on 27-3-2017.
+ * This represents the selected avatar to play with
  */
 public enum Avatar {
     WOODY,

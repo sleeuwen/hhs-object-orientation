@@ -22,6 +22,9 @@ public class PlayField extends JComponent {
 
     private Player player;
 
+    /**
+     * If the player is currently walking or not
+     */
     private boolean walking = false;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 

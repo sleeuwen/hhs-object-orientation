@@ -7,6 +7,9 @@ import cutthetree.GameState;
 import javax.imageio.ImageIO;
 import java.awt.*;
 
+/**
+ * The start menu displayed at startup
+ */
 public class StartMenu extends Menu {
     private static Image background;
     private static Image menuField;
@@ -23,6 +26,9 @@ public class StartMenu extends Menu {
         if (background == null || menuField == null || title == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this menu on screen
+     */
     private static void loadImage() {
         try {
             background = ImageIO.read(StartMenu.class.getResource("/img/menuBackground.png"));

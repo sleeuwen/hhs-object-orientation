@@ -13,6 +13,9 @@ public class Field {
 
     protected static Image grass;
 
+    /**
+     * The current position on the play field
+     */
     protected int xPos, yPos;
     protected boolean isSolid = false;
 
@@ -34,10 +37,16 @@ public class Field {
         }
     }
 
+    /**
+     * Whether the player can walk over this field or not
+     */
     public boolean isSolid() {
         return isSolid;
     }
 
+    /**
+     * Paint a representation of this field on screen
+     */
     public void paint(Graphics g) {
         g.drawImage(grass, xPos * SIZE, yPos * SIZE, null);
     }
