@@ -13,6 +13,10 @@ public class Tree extends Field {
     private static Image animImage;
 
     private Color color;
+
+    /**
+     * The current state of the animation
+     */
     private int animState = -1;
 
     public Tree(int x, int y, Color color) {

@@ -41,6 +41,9 @@ public class Game extends JComponent {
             "chopping", "grab"
     };
 
+    /**
+     * HashMap mapping GameState to Menu objects for painting
+     */
     private Map<GameState, Menu> menus = new HashMap<>();
 
     public Game() {
@@ -48,11 +51,13 @@ public class Game extends JComponent {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
+                // Delegate key released to the play field while playing
                 if (state == GameState.PLAYING) playField.dispatchEvent(e);
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
+                // Delegate key press to the appropriate object for the current state
                 if (state == GameState.PLAYING) {
                     playField.dispatchEvent(e);
                 } else {
@@ -64,12 +69,14 @@ public class Game extends JComponent {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                // Delegate mouse clicked events to the menus
                 if (state != GameState.PLAYING) {
                     menus.get(state).dispatchEvent(e);
                 }
             }
         });
 
+        // Initialize menus for every game state
         menus.put(GameState.START, new StartMenu(this));
         menus.put(GameState.LEVEL_SELECT, new LevelSelectMenu(this));
         menus.put(GameState.AVATAR, new AvatarMenu(this));
@@ -93,6 +100,7 @@ public class Game extends JComponent {
 
     public static void loadSound(String filename) {
         try {
+            // Play a sound or effect only when enabled.
             if ((sound && Arrays.asList(sounds).contains(filename.split("\\.")[0])) || (fx && Arrays.asList(effects).contains(filename.split("\\.")[0]))) {
                 clip = AudioSystem.getClip();
                 clip.open(AudioSystem.getAudioInputStream(Game.class.getResource("/sound/" + filename)));
@@ -107,6 +115,9 @@ public class Game extends JComponent {
         currentLevel = level;
     }
 
+    /**
+     * Change the current game state
+     */
     public static void changeState(GameState state) {
         Game.state = state;
     }
@@ -145,17 +156,29 @@ public class Game extends JComponent {
         return avatar;
     }
 
+    /**
+     * Start a new random level for the current difficulty
+     */
     public void start() {
         playField = new PlayField(LevelType.values()[difficulty], 0);
         state = GameState.PLAYING;
         clip.stop();
     }
 
+    /**
+     * Restart the current level
+     */
     public void restart() {
         playField = new PlayField(LevelType.values()[difficulty], currentLevel);
         state = GameState.PLAYING;
     }
 
+    /**
+     * Start the game loop, repainting every so often to accomplish the wanted FPS.
+     * <p>
+     * This should be called from a new thread as it will sleep the current
+     * thread to accomplish the wanted FPS.
+     */
     private void gameLoop() {
         int fps = 1000 / 30;
 
@@ -175,10 +198,12 @@ public class Game extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        // Paint the playfield when the current state is playing or higher (paused, finished)
         if (state.ordinal() >= GameState.PLAYING.ordinal()) {
             playField.paintComponent(g);
         }
 
+        // Paint the menu for the given state when applicable
         if (menus.containsKey(state)) {
             menus.get(state).paintComponent(g);
         }

@@ -7,6 +7,9 @@ import cutthetree.PlayField;
 import javax.imageio.ImageIO;
 import java.awt.*;
 
+/**
+ * The finish menu
+ */
 public class FinishMenu extends Menu {
     private static Image background;
 
@@ -16,6 +19,9 @@ public class FinishMenu extends Menu {
         if (background == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this menu on screen
+     */
     private static void loadImage() {
         try {
             background = ImageIO.read(PlayField.class.getResource("/img/finished.png"));

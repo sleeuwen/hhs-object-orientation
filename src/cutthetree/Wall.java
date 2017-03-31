@@ -5,8 +5,7 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * The Wall class represents a non-destroyable tree in
- * the field.
+ * The Wall class represents a non-destroyable tree in the field.
  */
 public class Wall extends Field {
     private static Image image;

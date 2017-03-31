@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by The lion kings on 27-3-2017.
+ * The avatar select menu
  */
 public class AvatarMenu extends Menu {
     private static Image background;
@@ -20,7 +20,10 @@ public class AvatarMenu extends Menu {
     private static Font avatarFont;
 
     private long start = System.currentTimeMillis();
-    private int selected = 0;
+
+    /**
+     * The current walk animation state
+     */
     private int walk = 2;
 
     public AvatarMenu(Game game) {
@@ -31,11 +34,16 @@ public class AvatarMenu extends Menu {
         if (avatarFont == null) loadFont();
     }
 
+    /**
+     * Loads the images required to paint this menu on screen
+     */
     private static void loadImages() {
         try {
             background = ImageIO.read(StartMenu.class.getResource("/img/menuBackground.png"));
             menuField = ImageIO.read(StartMenu.class.getResource("/img/menuField.png"));
             title = ImageIO.read(StartMenu.class.getResource("/img/menuTitle.png"));
+
+            // Load avatar walk sprites
             avatars[0] = ImageIO.read(StartMenu.class.getResource("/img/woodyWalkingSprite.png"));
             avatars[1] = ImageIO.read(StartMenu.class.getResource("/img/ashWalkingSprite.png"));
             avatars[2] = ImageIO.read(StartMenu.class.getResource("/img/peetaWalkingSprite.png"));
@@ -44,9 +52,13 @@ public class AvatarMenu extends Menu {
         }
     }
 
+    /**
+     * Loads the font to display the menu choices in
+     */
     private static void loadFont() {
         try {
-            avatarFont = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(20f);
+            // Use a smaller font size than the default
+            avatarFont = font.deriveFont(20f);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,6 +83,7 @@ public class AvatarMenu extends Menu {
 
     @Override
     protected void onKeyPress(KeyEvent e) {
+        // Use left/right instead of up/down arrows for selection
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
                 if (selected > 0) selected--;
@@ -93,6 +106,7 @@ public class AvatarMenu extends Menu {
 
             int offset = 0;
 
+            // Calculate image paint offset for walking animation
             if (i == selected) {
                 long diff = System.currentTimeMillis() - start;
 

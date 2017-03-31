@@ -3,6 +3,9 @@ package cutthetree.menus;
 import cutthetree.Game;
 import cutthetree.GameState;
 
+/**
+ * The level select menu
+ */
 public class LevelSelectMenu extends StartMenu {
     private int currentChoice = 0;
 

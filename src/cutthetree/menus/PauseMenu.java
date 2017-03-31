@@ -7,6 +7,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+/**
+ * The paused menu
+ */
 public class PauseMenu extends Menu {
     private static Image background;
 
@@ -17,6 +20,9 @@ public class PauseMenu extends Menu {
         if (background == null) loadImage();
     }
 
+    /**
+     * Loads the images required to paint this menu on screen
+     */
     private static void loadImage() {
         try {
             background = ImageIO.read(PauseMenu.class.getResource("/img/pauseScreen.png"));
@@ -27,6 +33,7 @@ public class PauseMenu extends Menu {
 
     @Override
     protected void onKeyPress(KeyEvent e) {
+        // Restore playing state on ESC, else delegate to parent.
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             Game.changeState(GameState.PLAYING);
             selected = 0;

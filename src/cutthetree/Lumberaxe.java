@@ -30,6 +30,9 @@ public class Lumberaxe extends Field {
         }
     }
 
+    /**
+     * @return The color of this lumberaxe.
+     */
     public Color getColor() {
         return color;
     }
