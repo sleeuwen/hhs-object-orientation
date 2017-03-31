@@ -47,19 +47,12 @@ public class PlayField extends JComponent {
             public void keyPressed(KeyEvent e) {
                 player.say("");
 
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ESCAPE:
-                        Game.changeState(GameState.PAUSED);
-                        break;
-                    case KeyEvent.VK_UP:
-                    case KeyEvent.VK_DOWN:
-                    case KeyEvent.VK_LEFT:
-                    case KeyEvent.VK_RIGHT:
-                        walking = Direction.fromKeyCode(e.getKeyCode());
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        cut();
-                        break;
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    Game.changeState(GameState.PAUSED);
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    cut();
+                } else if (Direction.fromKeyCode(e.getKeyCode()) != null) {
+                    walking = Direction.fromKeyCode(e.getKeyCode());
                 }
             }
         });
