@@ -14,7 +14,7 @@ public class LevelSelectMenu extends StartMenu {
     }
 
     @Override
-    void itemSelected(int index) {
+    protected void itemSelected(int index) {
         if (index == choices.length - 1) {
             // Restore choice on back
             selected = currentChoice;
