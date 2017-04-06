@@ -22,6 +22,7 @@ public class Wall extends Field {
      */
     private static void loadImage() {
         try {
+            // Source: http://orig10.deviantart.net/ab5d/f/2011/089/9/6/96fe92f1181852bddaa4ef35da4eeac3-d3crqnc.png
             image = ImageIO.read(Wall.class.getResource("/img/solidTree.png"));
         } catch (IOException e) {
             e.printStackTrace();

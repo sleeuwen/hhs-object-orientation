@@ -65,7 +65,7 @@ public class AvatarMenu extends Menu {
     }
 
     @Override
-    void itemSelected(int index) {
+    protected void itemSelected(int index) {
         Game.setAvatar(Avatar.values()[index]);
         Game.changeState(GameState.START);
     }

@@ -40,7 +40,7 @@ public class StartMenu extends Menu {
     }
 
     @Override
-    void itemSelected(int index) {
+    protected void itemSelected(int index) {
         if (index == 0) {
             game.start();
         } else if (index == 1) {

@@ -65,7 +65,9 @@ public class PlayField extends JComponent {
      */
     private static void loadImages() {
         try {
+            // Source: https://goldenharvest.org/imgs/backpack-icon.png
             imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
+            // Source: http://rs50.pbsrc.com/albums/f301/Rekkin/Sprites/Axe.gif~c200
             imageAxe = ImageIO.read(PlayField.class.getResource("/img/axes.png"));
         } catch (IOException e) {
             e.printStackTrace();

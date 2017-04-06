@@ -43,7 +43,7 @@ public class PauseMenu extends Menu {
     }
 
     @Override
-    void itemSelected(int index) {
+    protected void itemSelected(int index) {
         if (index == 0) {
             Game.changeState(GameState.PLAYING);
         } else if (index == 1) {

@@ -31,6 +31,7 @@ public class Field {
      */
     private static void loadImage() {
         try {
+            // Source: https://pixelatedview.files.wordpress.com/2011/12/flowers.png?w=880
             grass = ImageIO.read(Field.class.getResource("/img/grass.png"));
         } catch (IOException e) {
             e.printStackTrace();

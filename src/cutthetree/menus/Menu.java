@@ -61,6 +61,7 @@ public abstract class Menu extends JComponent {
      */
     private static void loadFont() {
         try {
+            // Source: http://www.fontspace.com/jackster-productions/pokemon-gb
             font = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
             fontSmall = font.deriveFont(12f);
         } catch (Exception e) {
@@ -112,7 +113,7 @@ public abstract class Menu extends JComponent {
      *
      * @param index The index of the selected menu item
      */
-    abstract void itemSelected(int index);
+    protected abstract void itemSelected(int index);
 
     @Override
     public abstract void paintComponent(Graphics g);

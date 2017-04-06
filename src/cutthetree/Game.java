@@ -35,10 +35,12 @@ public class Game extends JComponent {
     private static GameState state = GameState.START;
 
     private static String[] sounds = new String[]{
-            "opening", "winning"
+            "opening",  // Source: https://www.youtube.com/watch?v=axKDCZd4Mfc
+            "winning",  // Source: https://www.youtube.com/watch?v=h1NArzTtSMA
     };
     private static String[] effects = new String[]{
-            "chopping", "grab"
+            "chopping", // Source: https://www.youtube.com/watch?v=X3liPsg21Cg
+            "grab",     // Source: https://www.youtube.com/watch?v=NWndQ0CeanU
     };
 
     /**

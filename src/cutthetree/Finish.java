@@ -21,6 +21,7 @@ public class Finish extends Field {
      */
     private static void loadImage() {
         try {
+            // Source: http://vignette2.wikia.nocookie.net/gamesprites/images/8/81/Homes.jpg/revision/latest?cb=20080806185032
             image = ImageIO.read(Finish.class.getResource("/img/house.png"));
         } catch (IOException e) {
             e.printStackTrace();

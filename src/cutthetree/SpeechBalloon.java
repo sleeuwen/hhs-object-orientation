@@ -26,6 +26,7 @@ public class SpeechBalloon extends Field {
      */
     private static void loadFont() {
         try {
+            // Source: http://www.fontspace.com/jackster-productions/pokemon-gb
             font = Font.createFont(Font.TRUETYPE_FONT, SpeechBalloon.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(12f);
         } catch (Exception e) {
             e.printStackTrace();

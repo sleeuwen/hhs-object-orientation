@@ -24,6 +24,7 @@ public class Lumberaxe extends Field {
      */
     private static void loadImage() {
         try {
+            // Source: http://rs50.pbsrc.com/albums/f301/Rekkin/Sprites/Axe.gif~c200
             image = ImageIO.read(Lumberaxe.class.getResource("/img/axes.png"));
         } catch (IOException e) {
             e.printStackTrace();
